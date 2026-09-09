@@ -29,11 +29,7 @@ return new class extends Migration
             $table->rememberToken();
 
 
-            $table->enum('role', [
-                'admin',
-                'employee',
-                'employer'
-            ]);
+            $table->enum('role', ['admin', 'employee', 'employer']);
 
             $table->string('company')->nullable();
             $table->string('image')->nullable();
