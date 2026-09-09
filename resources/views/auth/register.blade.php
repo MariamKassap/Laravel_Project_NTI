@@ -39,18 +39,35 @@
 
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                type="password"
-                name="password"
-                required autocomplete="new-password" />
+            <div x-data="{ show: false }" class="relative mt-1">
+
+                <input
+                    id="password"
+                    name="password"
+                    required
+                    autocomplete="new-password"
+                    :type="show ? 'text' : 'password'"
+                    class="block w-full rounded-md border-gray-300
+                   dark:border-gray-700 dark:bg-gray-900
+                   dark:text-gray-300 pr-12">
+
+                <button
+                    type="button"
+                    @click="show = !show"
+                    class="absolute inset-y-0 right-0 z-10 flex items-center px-3 text-gray-500">
+                    <i x-show="!show" class="fa-solid fa-eye"></i>
+                    <i x-show="show" class="fa-solid fa-eye-slash"></i>
+                </button>
+
+            </div>
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
-
         <!-- Confirm Password -->
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
