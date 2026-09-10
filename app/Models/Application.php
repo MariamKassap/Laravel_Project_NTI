@@ -17,25 +17,11 @@ class Application extends Model
 
     public function employee(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'employee_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function cv(): BelongsTo
     {
         return $this->belongsTo(CV::class);
-    }
-    public function isAdmin(): bool
-    {
-        return $this->role === 'admin';
-    }
-
-    public function isEmployee(): bool
-    {
-        return $this->role === 'employee';
-    }
-
-    public function isEmployer(): bool
-    {
-        return $this->role === 'employer';
     }
 }

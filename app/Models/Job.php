@@ -13,7 +13,7 @@ class job extends Model
 
     public function employer(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'employer_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function applications(): HasMany
