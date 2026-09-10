@@ -37,12 +37,12 @@ class User extends Authenticatable
     // application 
     public function applications(): HasMany
     {
-        return $this->hasMany(Application::class, 'employee_id');
+        return $this->hasMany(Application::class, 'user_id');
     }
     //jobs 
     public function jobs(): HasMany
     {
-        return $this->hasMany(Job::class, 'employer_id');
+        return $this->hasMany(Job::class, 'user_id');
     }
     //posts
     public function posts(): HasMany
