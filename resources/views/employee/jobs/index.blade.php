@@ -8,52 +8,82 @@
 
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <! search bar>
+                <form method="GET" action="{{ route('employee.jobs.index') }}" class="mb-8">
 
-            @if($jobs->count())
+                    <div class="flex gap-3">
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search jobs by title..."
+                            class="flex-1 rounded-lg border-gray-300 shadow-sm">
 
-                @foreach($jobs as $job)
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg">
+                            Search
+                        </button>
 
-                <div class="bg-white p-6 rounded-lg shadow">
+                    </div>
 
-                    <h3 class="text-xl font-bold text-gray-800">
-                        {{ $job->title }}
-                    </h3>
+                </form>
 
-                    <p class="text-gray-600 mt-2">
-                        {{ $job->employer->company ?? $job->employer->name }}
-                    </p>
+                @if($jobs->count())
 
-                    <p class="text-gray-500 mt-2">
-                        {{ $job->job_type }}
-                    </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    <p class="text-gray-600 mt-4">
-                        {{ Str::limit($job->description, 120) }}
-                    </p>
+                    @foreach($jobs as $job)
 
-                    <a
-                        href="{{ route('employee.job.show', $job) }}"
-                        class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded">
-                        View Job
-                    </a>
+                    <div class="bg-white p-6 rounded-lg shadow">
+
+                        <h3 class="text-xl font-bold text-gray-800">
+                            {{ $job->title }}
+                        </h3>
+
+                        <p class="text-gray-600 mt-2">
+                            {{ $job->employer->company ?? $job->employer->name }}
+                        </p>
+
+                        <p class="text-gray-500 mt-2">
+                            {{ $job->job_type }}
+                        </p>
+
+                        <p class="text-green-700 font-semibold mt-2">
+                            {{ number_format($job->salary) }}$
+                        </p>
+
+                        <p class="text-gray-600 mt-4">
+                            {{ Str::limit($job->description, 120) }}
+                        </p>
+
+                        <a
+                            href="{{ route('employee.job.show', $job) }}"
+                            class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded">
+                            View Job
+                        </a>
+                        @if(in_array($job->id, $appliedJobIds))
+
+                        <span class="inline-block mt-4 ml-2 px-4 py-2 bg-green-100 text-green-700 rounded">
+                            ✓ Already Applied
+                        </span>
+
+                        @endif
+
+                    </div>
+
+                    @endforeach
 
                 </div>
+                <!pagination>
+                    <div class="mt-8">
+                        {{ $jobs->links() }}
+                    </div>
 
-                @endforeach
+                    @else
 
-            </div>
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <p class="text-gray-600">
+                            No jobs available right now.
+                        </p>
+                    </div>
 
-            @else
-
-            <div class="bg-white p-6 rounded-lg shadow text-center">
-                <p class="text-gray-600">
-                    No jobs available right now.
-                </p>
-            </div>
-
-            @endif
+                    @endif
 
         </div>
     </div>

@@ -21,12 +21,18 @@
                     {{ $job->employer->company ?? $job->employer->name }}
                 </p>
 
+
+
                 {{-- Job Type --}}
                 <div class="mt-6">
                     <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded">
                         {{ $job->job_type }}
                     </span>
                 </div>
+
+                <p class="text-green-700 font-semibold mt-2">
+                    Salary: {{ number_format($job->salary) }} EGP
+                </p>
 
                 {{-- Description --}}
                 <div class="mt-8">
@@ -38,17 +44,7 @@
                         {{ $job->description }}
                     </p>
                 </div>
-                {{-- applay btn --}}
-                <!-- <form
-                    action="{{ route('employee.jobs.apply', $job) }}" method="POST" class="mt-6">
-                    @csrf
 
-                    <button
-                        type="submit"
-                        class="px-6 py-3 bg-blue-600 text-white rounded-lg">
-                        Apply for this Job
-                    </button>
-                </form> -->
                 <a
                     href="{{ route('employee.jobs.apply', $job) }}"
                     class="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg">

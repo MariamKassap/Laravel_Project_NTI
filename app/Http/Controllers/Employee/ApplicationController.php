@@ -51,12 +51,6 @@ class ApplicationController extends Controller
             'cv_id' => $cv->id,
             'status' => 'pending',
         ]);
-        $application = Application::create([
-            'user_id' => $employeeId,
-            'job_id' => $job->id,
-            'cv_id' => $cv->id,
-            'status' => 'pending',
-        ]);
 
         return redirect()->route('employee.applications.index')->with('success', 'Application submitted successfully.');
     }

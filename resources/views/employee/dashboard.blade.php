@@ -343,6 +343,10 @@
                                 {{ $job->employer->company ?? $job->employer->name ?? 'Company' }}
                             </p>
 
+                            <p class="text-green-700 font-semibold mt-2">
+                                {{ number_format($job->salary) }}$
+                            </p>
+
                             <div class="flex items-center justify-between mt-4">
 
                                 @if($job->job_type)
