@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Employer\DashboardController;
+use App\Http\Controllers\Employer\JobController;
+use App\Http\Controllers\Employer\ApplicationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,6 +34,22 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
+});
+
+
+// Middleware allows both Employers and Admins into the group
+Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('employer.')->group(function () {
+
+    // 1. Employer Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // 2. Full Job CRUD (index, create, store, show, edit, update, destroy)
+    Route::resource('jobs', JobController::class);
+
+    // 3. Applications Management
+    Route::get('/jobs/{job}/applications', [ApplicationController::class, 'index'])->name('jobs.applications.index');
+    Route::patch('/applications/{application}/status', [ApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
+
 });
 
 require __DIR__ . '/auth.php';
