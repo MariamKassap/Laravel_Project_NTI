@@ -34,6 +34,8 @@ return new class extends Migration
 
             $table->date('deadline')->nullable();
 
+            $table->enum('status', ['active', 'closed', 'draft'])->default('active');
+
             $table->timestamps();
         });
 
