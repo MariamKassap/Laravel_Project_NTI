@@ -37,16 +37,16 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// Middleware allows both Employers and Admins into the group
+
 Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('employer.')->group(function () {
 
-    // 1. Employer Dashboard
+    
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // 2. Full Job CRUD (index, create, store, show, edit, update, destroy)
+    
     Route::resource('jobs', JobController::class);
 
-    // 3. Applications Management
+    
     Route::get('/jobs/{job}/applications', [ApplicationController::class, 'index'])->name('jobs.applications.index');
     Route::patch('/applications/{application}/status', [ApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
 
