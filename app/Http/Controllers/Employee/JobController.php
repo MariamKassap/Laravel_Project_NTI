@@ -16,11 +16,31 @@ class JobController extends Controller
         $employeeId = Auth::id();
 
         $query = Job::with('employer');
-        //search by job title 
+        // Search by job title, location, or company name
         if ($request->filled('search')) {
-            $query->where('title', 'like', '%' . $request->search . '%');
-        }
+            $search = $request->search;
 
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('location', 'like', '%' . $search . '%')
+                    ->orWhereHas('employer', function ($q) use ($search) {
+                        $q->where('company', 'like', '%' . $search . '%');
+                    });
+            });
+        }
+        //filter applied and not applied jobs
+        if ($request->filled('application_status')) {
+
+            $appliedJobIds = Application::where('user_id', $employeeId)->pluck('job_id');
+
+            if ($request->application_status === 'applied') {
+                $query->whereIn('id', $appliedJobIds);
+            }
+
+            if ($request->application_status === 'not_applied') {
+                $query->whereNotIn('id', $appliedJobIds);
+            }
+        }
         //gey jobs with pagination
         $jobs = $query->latest()->paginate(6)->withQueryString();
 

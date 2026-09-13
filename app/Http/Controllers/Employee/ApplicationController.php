@@ -13,10 +13,9 @@ class ApplicationController extends Controller
 {
     public function index()
     {
-        $applications = Application::where('user_id', Auth::id())
-            ->with(['job.employer', 'cv'])
-            ->latest()
-            ->get();
+
+        $query = Application::where('user_id', Auth::id())->with(['job.employer', 'cv']);
+        $applications = $query->latest()->paginate(4)->withQueryString();
 
         return view('employee.applications.index', compact('applications'));
     }

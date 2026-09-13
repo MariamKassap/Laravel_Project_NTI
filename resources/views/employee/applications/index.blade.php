@@ -90,6 +90,10 @@
                 @endforeach
 
             </div>
+            {{-- Pagination --}}
+            <div class="mt-8">
+                {{ $applications->links() }}
+            </div>
 
             @else
 
