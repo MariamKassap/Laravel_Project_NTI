@@ -8,6 +8,9 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
 
 class UsersTable
 {
@@ -20,11 +23,11 @@ class UsersTable
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable(),
-                TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
+
                 TextColumn::make('role')
-                    ->badge(),
+                    ->badge()
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('company')
                     ->searchable(),
                 ImageColumn::make('image'),
@@ -38,10 +41,17 @@ class UsersTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('role')
+                    ->options([
+                        'admin' => 'Admin',
+                        'employee' => 'Employee',
+                        'employer' => 'Employer',
+                    ]),
             ])
             ->recordActions([
+                ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

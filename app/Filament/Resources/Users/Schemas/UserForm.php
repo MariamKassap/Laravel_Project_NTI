@@ -17,16 +17,19 @@ class UserForm
                 TextInput::make('name')
                     ->required(),
 
+
                 TextInput::make('email')
                     ->label('Email address')
                     ->email()
-                    ->required(),
+                    ->required()
+                    ->autocomplete('off'),
 
                 TextInput::make('password')
                     ->password()
                     ->revealable()
                     ->dehydrated(fn($state) => filled($state))
-                    ->required(fn(string $operation): bool => $operation === 'create'),
+                    ->required(fn(string $operation): bool => $operation === 'create')
+                    ->autocomplete('new password'),
 
                 Select::make('role')
                     ->options([

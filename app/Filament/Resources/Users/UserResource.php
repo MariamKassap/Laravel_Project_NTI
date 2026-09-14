@@ -13,6 +13,11 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use App\Filament\Resources\Users\Pages\ViewUser;
+use App\Filament\Resources\Users\RelationManagers\ApplicationsRelationManager;
+use App\Filament\Resources\Users\RelationManagers\CvsRelationManager;
+use App\Filament\Resources\Users\RelationManagers\JobsRelationManager;
+
 
 class UserResource extends Resource
 {
@@ -35,7 +40,9 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CvsRelationManager::class,
+            ApplicationsRelationManager::class,
+            JobsRelationManager::class,
         ];
     }
 
@@ -45,6 +52,7 @@ class UserResource extends Resource
             'index' => ListUsers::route('/'),
             'create' => CreateUser::route('/create'),
             'edit' => EditUser::route('/{record}/edit'),
+            'view' => ViewUser::route('/{record}'),
         ];
     }
 }
