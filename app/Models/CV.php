@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class CV extends Model
 {
     use HasFactory;
+
+    protected $table = 'cvs';
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
