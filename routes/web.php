@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Employer\DashboardController;
 use App\Http\Controllers\Employer\JobController;
 use App\Http\Controllers\Employer\ApplicationController;
-
+use App\Http\Controllers\Employer\EmployerProfileController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -42,6 +42,10 @@ Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('empl
 
     
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    
+    Route::get('/profile', [EmployerProfileController::class, 'show'])->name('profile.show');
+    Route::post('/profile/image', [EmployerProfileController::class, 'updateImage'])->name('profile.image.update');
 
     
     Route::resource('jobs', JobController::class);
