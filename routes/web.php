@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Employee\DashboardController;
+use App\Http\Controllers\Employee\JobController;
+use App\Http\Controllers\Employee\ApplicationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Employer\DashboardController;
 use App\Http\Controllers\Employer\JobController;
@@ -10,30 +13,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Role-based dashboards
-Route::middleware('auth')->group(function () {
+//mariam employee routes
+Route::middleware(['auth', 'role:employee'])->group(function () {
 
-    Route::get('/employee/dashboard', function () {
-        return view('employee.dashboard');
-    })->name('employee.dashboard');
+    // Employee Dashboard
+    Route::get('/employee/dashboard', [DashboardController::class, 'index'])->name('employee.dashboard');
 
-    Route::get('/employer/dashboard', function () {
-        return view('employer.dashboard');
-    })->name('employer.dashboard');
+    // Employee Applications
+    Route::get('/employee/applications', [ApplicationController::class, 'index'])->name('employee.applications.index');
 
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/employee/applications/{application}', [ApplicationController::class, 'show'])->name('employee.applications.show');
 
-    // Profile
-    Route::get('/profile', [ProfileController::class, 'edit'])
-        ->name('profile.edit');
+    // Apply for a job - show CV selection
+    Route::get('/employee/jobs/{job}/apply', [ApplicationController::class, 'create'])->name('employee.jobs.apply');
 
-    Route::patch('/profile', [ProfileController::class, 'update'])
-        ->name('profile.update');
+    // Apply for a job - submit application
+    Route::post('/employee/jobs/{job}/apply', [ApplicationController::class, 'store'])->name('employee.jobs.store');
 
-    Route::delete('/profile', [ProfileController::class, 'destroy'])
-        ->name('profile.destroy');
+
+    // Employee Jobs
+    Route::get('/employee/jobs', [JobController::class, 'index'])->name('employee.jobs.index');
+
+    Route::get('/employee/jobs/{job}', [JobController::class, 'show'])->name('employee.job.show');
 });
 
 
