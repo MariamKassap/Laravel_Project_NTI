@@ -33,7 +33,6 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
     // Apply for a job - submit application
     Route::post('/employee/jobs/{job}/apply', [ApplicationController::class, 'store'])->name('employee.jobs.store');
 
-
     // Employee Jobs
     Route::get('/employee/jobs', [JobController::class, 'index'])->name('employee.jobs.index');
 
@@ -41,6 +40,13 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
 });
 
 
+// Admin Dashboard
+// Route::get('/admin', function () {
+//     return view('admin.dashboard');
+// })->name('admin.dashboard');
+// Profile
+Route::get('/profile', [ProfileController::class, 'edit'])
+    ->name('profile.edit');
 
 Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('employer.')->group(function () {
 
