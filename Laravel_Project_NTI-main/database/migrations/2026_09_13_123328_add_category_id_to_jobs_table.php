@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('saved_jobs', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('jobs', function (Blueprint $table) {
+            $table->foreignId('category_id')->nullable()->constrained()->onDelete('cascade');
         });
     }
 
@@ -22,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('saved_jobs');
+        Schema::table('jobs', function (Blueprint $table) {
+            $table->dropForeign(['category_id']);
+            $table->dropColumn('category_id');
+        });
     }
 };

@@ -10,6 +10,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Job extends Model
 {
     use HasFactory;
+    protected $fillable = [
+    'title',
+    'description',
+    'category_id',
+    'user_id'
+    ];
 
     public function employer(): BelongsTo
     {
@@ -20,4 +26,8 @@ class Job extends Model
     {
         return $this->hasMany(Application::class);
     }
+    public function category(): BelongsTo
+{
+    return $this->belongsTo(Category::class);
+}
 }
