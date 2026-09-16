@@ -11,7 +11,12 @@ use App\Http\Controllers\Employer\JobController as EmployerJobController;
 use App\Http\Controllers\Employer\ApplicationController as EmployerApplicationController;
 use App\Http\Controllers\Employer\EmployerProfileController;
 
+use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Post\PostLikeController;
+use App\Http\Controllers\Post\CommentController;
+
 use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -44,27 +49,68 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
 // Route::get('/admin', function () {
 //    return view('admin.dashboard');
 //})->name('admin.dashboard');
-// Profile
+
+// Profile + Posts
 Route::middleware('auth')->group(function () {
+
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::post('/profile/image', [ProfileController::class, 'updateImage'])
-    ->name('profile.image.update');
+        ->name('profile.image.update');
+
+    // Posts
+    Route::get('/posts', [PostController::class, 'index'])
+        ->name('posts.index');
+
+    Route::get('/posts/create', [PostController::class, 'create'])
+        ->name('posts.create');
+
+    Route::post('/posts', [PostController::class, 'store'])
+        ->name('posts.store');
+
+    // Post Edit / Update / Delete
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])
+        ->name('posts.edit');
+
+    Route::put('/posts/{post}', [PostController::class, 'update'])
+        ->name('posts.update');
+
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])
+        ->name('posts.destroy');
+
+    // Delete Post Media
+    Route::delete('/post-media/{media}', [PostController::class, 'destroyMedia'])
+        ->name('post-media.destroy');
+
+    // Likes
+    Route::post('/posts/{post}/like', [PostLikeController::class, 'store'])
+        ->name('posts.like');
+
+    Route::delete('/posts/{post}/like', [PostLikeController::class, 'destroy'])
+        ->name('posts.unlike');
+
+    // Comments
+    Route::post('/posts/{post}/comments', [CommentController::class, 'store'])
+        ->name('comments.store');
+
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
+        ->name('comments.destroy');
 });
 
 Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('employer.')->group(function () {
 
-    
     Route::get('/dashboard', [EmployerDashboardController::class, 'index'])->name('dashboard');
 
-    
     Route::resource('jobs', EmployerJobController::class);
 
-    
     Route::get('/jobs/{job}/applications', [EmployerApplicationController::class, 'index'])->name('jobs.applications.index');
-    Route::patch('/applications/{application}/status', [EmployerApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
 
+    Route::patch('/applications/{application}/status', [EmployerApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
 });
 
 require __DIR__ . '/auth.php';

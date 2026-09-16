@@ -58,6 +58,13 @@
 
                     @endif
 
+                    <!-- Community -->
+                    <x-nav-link
+                        :href="route('posts.index')"
+                        :active="request()->routeIs('posts.*')">
+                        Community
+                    </x-nav-link>
+
                 </div>
 
             </div>
@@ -246,4 +253,3 @@
     </div>
 
 </nav>
-```

@@ -18,6 +18,15 @@ class User extends Authenticatable implements FilamentUser
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role',
+        'company',
+        'image',
+    ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -30,36 +39,43 @@ class User extends Authenticatable implements FilamentUser
             'password' => 'hashed',
         ];
     }
-    // cv 
+
+    // cv
     public function cvs(): HasMany
     {
         return $this->hasMany(CV::class);
     }
-    // application 
+
+    // application
     public function applications(): HasMany
     {
         return $this->hasMany(Application::class, 'user_id');
     }
-    //jobs 
+
+    // jobs
     public function jobs(): HasMany
     {
         return $this->hasMany(Job::class, 'user_id');
     }
-    //posts
+
+    // posts
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
-    //post likes
+
+    // post likes
     public function postLikes(): HasMany
     {
         return $this->hasMany(PostLike::class);
     }
-    //comments
+
+    // comments
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
+
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
@@ -75,7 +91,7 @@ class User extends Authenticatable implements FilamentUser
         return $this->role === 'employer';
     }
 
-    //filament  admin access
+    // filament admin access
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->role === 'admin';
