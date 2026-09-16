@@ -1,14 +1,17 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+
 use App\Http\Controllers\Employee\DashboardController;
 use App\Http\Controllers\Employee\JobController;
 use App\Http\Controllers\Employee\ApplicationController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Employer\DashboardController;
-use App\Http\Controllers\Employer\JobController;
-use App\Http\Controllers\Employer\ApplicationController;
+
+use App\Http\Controllers\Employer\DashboardController as EmployerDashboardController;
+use App\Http\Controllers\Employer\JobController as EmployerJobController;
+use App\Http\Controllers\Employer\ApplicationController as EmployerApplicationController;
 use App\Http\Controllers\Employer\EmployerProfileController;
+
+use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -42,18 +45,18 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
 Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('employer.')->group(function () {
 
     
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [EmployerDashboardController::class, 'index'])->name('dashboard');
 
     
     Route::get('/profile', [EmployerProfileController::class, 'show'])->name('profile.show');
     Route::post('/profile/image', [EmployerProfileController::class, 'updateImage'])->name('profile.image.update');
 
     
-    Route::resource('jobs', JobController::class);
+    Route::resource('jobs', EmployerJobController::class);
 
     
-    Route::get('/jobs/{job}/applications', [ApplicationController::class, 'index'])->name('jobs.applications.index');
-    Route::patch('/applications/{application}/status', [ApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
+    Route::get('/jobs/{job}/applications', [EmployerApplicationController::class, 'index'])->name('jobs.applications.index');
+    Route::patch('/applications/{application}/status', [EmployerApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
 
 });
 
