@@ -45,17 +45,18 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
 //    return view('admin.dashboard');
 //})->name('admin.dashboard');
 // Profile
-Route::get('/profile', [ProfileController::class, 'edit'])
-    ->name('profile.edit');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile/image', [ProfileController::class, 'updateImage'])
+    ->name('profile.image.update');
+});
 
 Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('employer.')->group(function () {
 
     
     Route::get('/dashboard', [EmployerDashboardController::class, 'index'])->name('dashboard');
-
-    
-    Route::get('/profile', [EmployerProfileController::class, 'show'])->name('profile.show');
-    Route::post('/profile/image', [EmployerProfileController::class, 'updateImage'])->name('profile.image.update');
 
     
     Route::resource('jobs', EmployerJobController::class);
