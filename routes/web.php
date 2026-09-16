@@ -42,8 +42,8 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
 
 // Admin Dashboard
 // Route::get('/admin', function () {
-//     return view('admin.dashboard');
-// })->name('admin.dashboard');
+//    return view('admin.dashboard');
+//})->name('admin.dashboard');
 // Profile
 Route::get('/profile', [ProfileController::class, 'edit'])
     ->name('profile.edit');
