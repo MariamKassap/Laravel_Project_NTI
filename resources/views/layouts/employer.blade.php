@@ -1,6 +1,6 @@
-```blade
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,7 @@
     <!-- Included Alpine.js for dropdown interactivity -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
+
 <body class="bg-[#F8FAFC] font-sans text-slate-700 antialiased">
     <div class="min-h-screen flex">
         <!-- Sidebar -->
@@ -80,7 +81,7 @@
 
                     <!-- Profile -->
                     <a href="{{ route('profile.edit') }}"
-                       class="flex items-center gap-3 border-l border-slate-200 pl-6 hover:opacity-80 transition">
+                        class="flex items-center gap-3 border-l border-slate-200 pl-6 hover:opacity-80 transition">
 
                         <div class="text-right">
                             <div class="text-sm font-semibold text-slate-800">
@@ -93,15 +94,14 @@
                         </div>
 
                         @if(auth()->user()->image)
-                            <img
-                                src="{{ asset('storage/' . auth()->user()->image) }}"
-                                alt="{{ auth()->user()->name }}"
-                                class="w-10 h-10 rounded-full object-cover border border-slate-200"
-                            >
+                        <img
+                            src="{{ asset('storage/' . auth()->user()->image) }}"
+                            alt="{{ auth()->user()->name }}"
+                            class="w-10 h-10 rounded-full object-cover border border-slate-200">
                         @else
-                            <div class="w-10 h-10 bg-blue-100 text-blue-700 font-bold rounded-full flex items-center justify-center">
-                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                            </div>
+                        <div class="w-10 h-10 bg-blue-100 text-blue-700 font-bold rounded-full flex items-center justify-center">
+                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                        </div>
                         @endif
 
                     </a>
@@ -111,9 +111,9 @@
             <!-- Main Content Container -->
             <div class="p-8 flex-1 overflow-y-auto">
                 @if(session('success'))
-                    <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl flex items-center gap-3">
-                        <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
-                    </div>
+                <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl flex items-center gap-3">
+                    <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
+                </div>
                 @endif
 
                 @yield('content')
@@ -121,6 +121,5 @@
         </main>
     </div>
 </body>
+
 </html>
-
-

@@ -102,6 +102,8 @@ Route::middleware('auth')->group(function () {
         ->name('comments.destroy');
 });
 
+
+//salma employer 
 Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('employer.')->group(function () {
 
     Route::get('/dashboard', [EmployerDashboardController::class, 'index'])->name('dashboard');
@@ -111,6 +113,10 @@ Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('empl
     Route::get('/jobs/{job}/applications', [EmployerApplicationController::class, 'index'])->name('jobs.applications.index');
 
     Route::patch('/applications/{application}/status', [EmployerApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
+
+    //mariam added while testing 
+    Route::get('/applications/{application}', [EmployerApplicationController::class, 'show'])
+        ->name('applications.show');
 });
 
 require __DIR__ . '/auth.php';

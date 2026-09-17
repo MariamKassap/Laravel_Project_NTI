@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class PostMedia extends Model
 {
     use HasFactory;
-
+    public $timestamps = false; // Disable automatic timestamps
 
     public function post(): BelongsTo
     {

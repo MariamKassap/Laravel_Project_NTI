@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Post;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\PostMedia;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+
     public function index()
     {
         $posts = Post::with([
@@ -39,7 +41,6 @@ class PostController extends Controller
             'media' => 'nullable|array|max:10',
             'media.*' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4,mov,avi,webm|max:51200',
         ]);
-
         $post = Post::create([
             'user_id' => auth()->id(),
             'title' => $request->title,

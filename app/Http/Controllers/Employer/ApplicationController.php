@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
-    
+
     public function index(Request $request)
     {
         $userId = $request->user()->id;
@@ -16,17 +16,17 @@ class ApplicationController extends Controller
         $applications = Application::whereHas('job', function ($query) use ($userId) {
             $query->where('user_id', $userId);
         })
-        ->with(['user', 'job', 'cv'])
-        ->latest()
-        ->paginate(10);
+            ->with(['employee', 'job', 'cv'])
+            ->latest()
+            ->paginate(10);
 
         return view('employer.applications.index', compact('applications'));
     }
 
-   
+
     public function show(Request $request, Application $application)
     {
-        
+
         if ($application->job->user_id !== $request->user()->id) {
             abort(403, 'Unauthorized access.');
         }
@@ -36,10 +36,10 @@ class ApplicationController extends Controller
         return view('employer.applications.show', compact('application'));
     }
 
-    
+
     public function updateStatus(Request $request, Application $application)
     {
-       
+
         if ($application->job->user_id !== $request->user()->id) {
             abort(403, 'Unauthorized access.');
         }
