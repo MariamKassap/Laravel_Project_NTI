@@ -40,17 +40,6 @@
                         <i class="fa-solid fa-comments"></i> Community
                     </a>
 
-                    <!-- Static UI Elements -->
-                    <div class="pt-4 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">Menu</div>
-                    <span class="flex items-center gap-3 px-4 py-2 text-slate-500 opacity-60 cursor-not-allowed">
-                        <i class="fa-solid fa-building"></i> Company Profile
-                    </span>
-                    <span class="flex items-center gap-3 px-4 py-2 text-slate-500 opacity-60 cursor-not-allowed">
-                        <i class="fa-solid fa-message"></i> Messages
-                    </span>
-                    <span class="flex items-center gap-3 px-4 py-2 text-slate-500 opacity-60 cursor-not-allowed">
-                        <i class="fa-solid fa-gear"></i> Settings
-                    </span>
                 </nav>
             </div>
 
