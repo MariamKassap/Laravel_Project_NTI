@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Post;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\PostMedia;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests; //mariam added 
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-
+    use AuthorizesRequests; // Add trait here 
     public function index()
     {
         $posts = Post::with([
@@ -32,25 +33,24 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-
+    //mariam test validation 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'media' => 'nullable|array|max:10',
             'media.*' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4,mov,avi,webm|max:51200',
         ]);
+
         $post = Post::create([
-            'user_id' => auth()->id(),
-            'title' => $request->title,
-            'content' => $request->content,
+            'user_id' => Auth::id(), // Resolves "Undefined method 'id'"
+            'title' => $validated['title'],
+            'content' => $validated['content'], // Resolves "protected visibility"
         ]);
 
         if ($request->hasFile('media')) {
-
             foreach ($request->file('media') as $file) {
-
                 $path = $file->store('posts', 'public');
 
                 $mediaType = str_starts_with(
@@ -67,7 +67,6 @@ class PostController extends Controller
                 ]);
             }
         }
-
         return redirect('/posts');
     }
 
@@ -86,16 +85,15 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'media' => 'nullable|array|max:10',
             'media.*' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4,mov,avi,webm|max:51200',
         ]);
-
         $post->update([
-            'title' => $request->title,
-            'content' => $request->content,
+            'title' => $validated['title'],
+            'content' => $validated['content'],
         ]);
 
         // Add new media
@@ -128,9 +126,7 @@ class PostController extends Controller
     {
         $this->authorize('update', $media->post);
 
-        Storage::disk('public')->delete(
-            $media->media_path
-        );
+        Storage::disk('public')->delete($media->media_path);
 
         $media->delete();
 
@@ -146,11 +142,9 @@ class PostController extends Controller
 
         foreach ($post->media as $media) {
 
-            Storage::disk('public')->delete(
-                $media->media_path
-            );
+            Storage::disk('public')->delete($media->media_path);
         }
-
+        $post->media()->delete(); // Clean up media records explicitly
         $post->delete();
 
         return redirect('/posts');

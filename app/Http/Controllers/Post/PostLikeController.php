@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\PostLike;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class PostLikeController extends Controller
 {
@@ -13,7 +14,7 @@ class PostLikeController extends Controller
     {
         PostLike::firstOrCreate([
             'post_id' => $post->id,
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
         ]);
 
         return response()->json([
@@ -25,7 +26,7 @@ class PostLikeController extends Controller
     public function destroy(Post $post): JsonResponse
     {
         PostLike::where('post_id', $post->id)
-            ->where('user_id', auth()->id())
+            ->where('user_id', Auth::id())
             ->delete();
 
         return response()->json([
