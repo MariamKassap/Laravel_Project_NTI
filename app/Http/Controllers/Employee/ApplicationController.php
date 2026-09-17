@@ -22,40 +22,18 @@ class ApplicationController extends Controller
 
     public function create(Job $job)
     {
+        if ($job->deadline && now()->startOfDay()->gt(\Carbon\Carbon::parse($job->deadline)->startOfDay())) {
+            return redirect()
+                ->route('employee.job.show', $job)
+                ->with('error', 'The application deadline has passed.');
+        }
+
         $cvs = CV::where('user_id', Auth::id())
             ->latest()
             ->get();
 
         return view('employee.applications.create', compact('job', 'cvs'));
     }
-
-    // public function store(Request $request, Job $job)
-    // {
-    //     if ($job->deadline && now()->startOfDay()->gt($job->deadline)) {
-    //         return back()->with('error', 'The application deadline has passed.');
-    //     }
-
-    //     $employeeId = Auth::id();
-
-    //     if (Application::where('user_id', $employeeId)->where('job_id', $job->id)->exists()) {
-
-    //         return back()->with('error', 'You have already applied for this job.');
-    //     }
-
-    //     $request->validate(['cv_id' => 'required|exists:cvs,id',]);
-
-    //     // Make sure the selected CV belongs to this employee
-    //     $cv = CV::where('id', $request->cv_id)->where('user_id', $employeeId)->firstOrFail();
-
-    //     Application::create([
-    //         'user_id' => $employeeId,
-    //         'job_id' => $job->id,
-    //         'cv_id' => $cv->id,
-    //         'status' => 'pending',
-    //     ]);
-
-    //     return redirect()->route('employee.applications.index')->with('success', 'Application submitted successfully.');
-    // }
 
     public function store(Request $request, Job $job)
     {
@@ -85,11 +63,7 @@ class ApplicationController extends Controller
             ])->withInput();
         }
 
-        /*
-    |--------------------------------------------------------------------------
-    | Existing CV
-    |--------------------------------------------------------------------------
-    */
+        //Existing CV
 
         if ($request->cv_id) {
 
@@ -98,11 +72,8 @@ class ApplicationController extends Controller
                 ->where('user_id', $employeeId)
                 ->firstOrFail();
 
-            /*
-    |--------------------------------------------------------------------------
-    | New CV
-    |--------------------------------------------------------------------------
-    */
+            // New CV
+
         } else {
 
             $path = $request->file('new_cv')->store('cvs', 'public');
@@ -114,11 +85,8 @@ class ApplicationController extends Controller
             ]);
         }
 
-        /*
-    |--------------------------------------------------------------------------
-    | Create Application
-    |--------------------------------------------------------------------------
-    */
+        // | Create Application
+
 
         Application::create([
             'user_id' => $employeeId,

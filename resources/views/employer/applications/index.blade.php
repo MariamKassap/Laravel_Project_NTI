@@ -5,7 +5,11 @@
 @section('content')
 <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden p-6 space-y-6">
     <div class="border-b border-slate-100 pb-4">
-        <h2 class="text-xl font-bold text-slate-800">Candidates</h2>
+        <h2 class="text-xl font-bold text-slate-800">
+            <h2 class="text-xl font-bold text-slate-800">
+                Applicants for {{ $job->title }}
+            </h2>
+        </h2>
         <p class="text-xs text-slate-400">Manage candidate application statuses directly below</p>
     </div>
 

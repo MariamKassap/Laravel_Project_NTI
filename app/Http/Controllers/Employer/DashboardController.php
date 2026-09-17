@@ -13,25 +13,45 @@ class DashboardController extends Controller
     {
         $userId = $request->user()->id;
 
-        
+        // Active jobs
+        // Jobs with no deadline are also considered active.
+        $activeJobsCount = Job::where('user_id', $userId)
+            ->where(function ($query) {
+                $query->whereNull('deadline')
+                    ->orWhereDate('deadline', '>=', today());
+            })
+            ->count();
+
+        // Expired jobs
+        $expiredJobsCount = Job::where('user_id', $userId)
+            ->whereDate('deadline', '<', today())
+            ->count();
+
+        // All applications for this employer's jobs
+        $totalApplicationsCount = Application::whereHas('job', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->count();
+
+        // Accepted applications
+        $acceptedApplicationsCount = Application::whereHas('job', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })
+            ->where('status', 'accepted')
+            ->count();
+
+        // Recent jobs
         $recentJobs = Job::where('user_id', $userId)
             ->withCount('applications')
             ->latest()
             ->take(5)
             ->get();
 
-        
-        $totalJobsCount = Job::where('user_id', $userId)->count();
-
-        
-        $totalApplicationsCount = Application::whereHas('job', function ($query) use ($userId) {
-            $query->where('user_id', $userId);
-        })->count();
-
         return view('employer.dashboard', compact(
-            'recentJobs', 
-            'totalJobsCount', 
-            'totalApplicationsCount'
+            'recentJobs',
+            'activeJobsCount',
+            'expiredJobsCount',
+            'totalApplicationsCount',
+            'acceptedApplicationsCount'
         ));
     }
 }
