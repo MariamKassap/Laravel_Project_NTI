@@ -25,7 +25,7 @@
 
                 @if($cvs->count())
 
-                <form
+                <!-- <form
                     action="{{ route('employee.jobs.store', $job) }}"
                     method="POST"
                     class="mt-4">
@@ -49,6 +49,68 @@
                     </label>
 
                     @endforeach
+
+                    @error('cv_id')
+                    <p class="text-red-600 text-sm mb-4">
+                        {{ $message }}
+                    </p>
+                    @enderror
+
+                    <button
+                        type="submit"
+                        class="px-6 py-3 bg-blue-600 text-white rounded-lg">
+                        Submit Application
+                    </button>
+
+                </form> -->
+                <form
+                    action="{{ route('employee.jobs.store', $job) }}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    class="mt-4">
+                    @csrf
+
+                    <h3 class="font-semibold text-lg">
+                        Choose an existing CV
+                    </h3>
+
+                    @foreach($cvs as $cv)
+
+                    <label class="block border rounded-lg p-4 mb-3 cursor-pointer">
+
+                        <input
+                            type="radio"
+                            name="cv_id"
+                            value="{{ $cv->id }}"
+                            class="mr-2">
+
+                        <span class="font-semibold">
+                            {{ $cv->title ?? 'My CV' }}
+                        </span>
+
+                    </label>
+
+                    @endforeach
+
+                    <div class="my-6 border-t pt-6">
+
+                        <h3 class="font-semibold text-lg">
+                            Or upload a new CV
+                        </h3>
+
+                        <input
+                            type="file"
+                            name="new_cv"
+                            accept=".pdf,.doc,.docx"
+                            class="mt-3">
+
+                        @error('new_cv')
+                        <p class="text-red-600 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                        @enderror
+
+                    </div>
 
                     @error('cv_id')
                     <p class="text-red-600 text-sm mb-4">

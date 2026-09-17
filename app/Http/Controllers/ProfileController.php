@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use App\Models\CV;
+use App\Models\Application;
 
 class ProfileController extends Controller
 {
@@ -19,6 +21,10 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+            //Employee CV mariam
+            'cvs' => $request->user()->isEmployee()
+                ? $request->user()->cvs
+                : collect(),
         ]);
     }
 
@@ -79,5 +85,50 @@ class ProfileController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Profile image updated successfully!');
+    }
+
+
+    //employee CV uploud by mariam 
+    public function storeCV(Request $request)
+    {
+        $request->validate([
+            'title' => ['nullable', 'string', 'max:255'],
+            'cv' => ['required', 'file', 'mimes:pdf,doc,docx', 'max:5120'],
+        ]);
+
+        $path = $request->file('cv')->store('cvs', 'public');
+
+        CV::create([
+            'user_id' => Auth::id(),
+            'title' => $request->title,
+            'file_path' => $path,
+        ]);
+
+        return back()->with('success', 'CV uploaded successfully!');
+    }
+
+    public function destroyCV(CV $cv)
+    {
+        if ($cv->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        if (Application::where('cv_id', $cv->id)->exists()) {
+            return back()->with(
+                'error',
+                'You cannot delete this CV because it is being used by an application.'
+            );
+        }
+
+        if (Storage::disk('public')->exists($cv->file_path)) {
+            Storage::disk('public')->delete($cv->file_path);
+        }
+
+        $cv->delete();
+
+        return redirect()
+            ->back()
+            ->with('success', 'CV deleted successfully!')
+            ->withFragment('my-cvs');
     }
 }

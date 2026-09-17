@@ -22,16 +22,19 @@
                     <select
                         name="application_status"
                         class="rounded-lg border-gray-300 shadow-sm">
-                        <option value="">All Jobs</option>
-
                         <option value="not_applied"
-                            {{ request('application_status') === 'not_applied' ? 'selected' : '' }}>
+                            {{ request('application_status', 'not_applied') === 'not_applied' ? 'selected' : '' }}>
                             Not Applied
                         </option>
 
                         <option value="applied"
                             {{ request('application_status') === 'applied' ? 'selected' : '' }}>
                             Applied
+                        </option>
+
+                        <option value="all"
+                            {{ request('application_status') === 'all' ? 'selected' : '' }}>
+                            All Jobs
                         </option>
                     </select>
 
@@ -68,6 +71,13 @@
                         {{ number_format($job->salary) }}$
                     </p>
 
+                    @if($job->deadline)
+                    <p class="text-gray-600 mt-2">
+                        Deadline:
+                        {{ \Carbon\Carbon::parse($job->deadline)->format('M d, Y') }}
+                    </p>
+                    @endif
+
                     <p class="text-gray-600 mt-4">
                         {{ Str::limit($job->description, 120) }}
                     </p>
@@ -84,6 +94,8 @@
                     </span>
 
                     @endif
+
+
 
                 </div>
 
