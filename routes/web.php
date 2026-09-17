@@ -63,6 +63,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/image', [ProfileController::class, 'updateImage'])
         ->name('profile.image.update');
 
+    //posts by mariam 
+    Route::post('/profile/cv', [ProfileController::class, 'storeCV'])
+        ->name('profile.cv.store');
+
+    Route::delete('/profile/cv/{cv}', [ProfileController::class, 'destroyCV'])
+        ->name('profile.cv.destroy');
+
     // Posts
     Route::get('/posts', [PostController::class, 'index'])
         ->name('posts.index');

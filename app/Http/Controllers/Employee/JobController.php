@@ -16,8 +16,10 @@ class JobController extends Controller
         $employeeId = Auth::id();
 
         $query = Job::with('employer');
-        // Search by job title, location, or company name
+
+        // Search
         if ($request->filled('search')) {
+
             $search = $request->search;
 
             $query->where(function ($q) use ($search) {
@@ -28,31 +30,47 @@ class JobController extends Controller
                     });
             });
         }
-        //filter applied and not applied jobs
-        if ($request->filled('application_status')) {
 
-            $appliedJobIds = Application::where('user_id', $employeeId)->pluck('job_id');
+        // Jobs employee already applied to
+        $appliedJobIds = Application::where('user_id', $employeeId)
+            ->pluck('job_id')
+            ->toArray();
 
-            if ($request->application_status === 'applied') {
-                $query->whereIn('id', $appliedJobIds);
-            }
+        // Application filter
+        if ($request->application_status === 'applied') {
 
-            if ($request->application_status === 'not_applied') {
-                $query->whereNotIn('id', $appliedJobIds);
-            }
+            // Show applied jobs
+            $query->whereIn('id', $appliedJobIds);
+        } elseif ($request->application_status === 'all') {
+
+            // Show all jobs
+            // No additional filter
+
+        } else {
+
+            // DEFAULT: Show NOT APPLIED jobs
+            $query->whereNotIn('id', $appliedJobIds);
         }
-        //gey jobs with pagination
-        $jobs = $query->latest()->paginate(6)->withQueryString();
 
-        $appliedJobIds = Application::where('user_id', $employeeId)->pluck('job_id')->toArray();
+        // Pagination happens AFTER filtering
+        $jobs = $query->latest()
+            ->paginate(6)
+            ->withQueryString();
 
-        return view('employee.jobs.index', compact('jobs', 'appliedJobIds'));
+        return view('employee.jobs.index', compact(
+            'jobs',
+            'appliedJobIds'
+        ));
     }
 
     public function show(Job $job)
     {
         $job->load('employer');
 
-        return view('employee.jobs.show', compact('job'));
+        $application = Application::where('user_id', Auth::id())
+            ->where('job_id', $job->id)
+            ->first();
+
+        return view('employee.jobs.show', compact('job', 'application'));
     }
 }
