@@ -15,11 +15,17 @@ use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Post\PostLikeController;
 use App\Http\Controllers\Post\CommentController;
 
+use App\Http\Controllers\Public\WelcomeController as PublicWelcomeController;
+use App\Http\Controllers\Public\JobController as PublicJobController;
+use App\Http\Controllers\Public\PostController as PublicPostController;
+
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Public landing + browsing (guest-safe, reuse existing Jobs/Posts logic)
+Route::get('/', [PublicWelcomeController::class, 'index'])->name('home');
+Route::get('/jobs', [PublicJobController::class, 'index'])->name('public.jobs.index');
+Route::get('/jobs/{job}', [PublicJobController::class, 'show'])->name('public.jobs.show');
+Route::get('/community', [PublicPostController::class, 'index'])->name('public.posts.index');
 
 //mariam employee routes
 Route::middleware(['auth', 'role:employee'])->group(function () {
