@@ -6,8 +6,8 @@
 <div class="max-w-3xl mx-auto bg-white rounded-2xl border border-slate-100 shadow-sm p-8 space-y-6">
     <div class="flex justify-between items-center border-b border-slate-100 pb-6">
         <div>
-            <h2 class="text-2xl font-bold text-slate-800">{{ $application->user->name }}</h2>
-            <p class="text-sm text-slate-400">{{ $application->user->email }}</p>
+            <h2 class="text-2xl font-bold text-slate-800">{{ $application->employee->name }}</h2>
+            <p class="text-sm text-slate-400">{{ $application->employee->email }}</p>
         </div>
         <form method="POST" action="{{ route('employer.applications.updateStatus', $application->id) }}">
             @csrf
@@ -31,11 +31,11 @@
             <label class="text-xs font-semibold text-slate-400 uppercase">Submitted CV</label>
             <div class="mt-2">
                 @if($application->cv && $application->cv->file_path)
-                    <a href="{{ asset('storage/' . $application->cv->file_path) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-xl text-sm font-semibold hover:bg-blue-100">
-                        <i class="fa-solid fa-file-pdf"></i> View Submitted Resume ({{ $application->cv->title ?? 'CV' }})
-                    </a>
+                <a href="{{ asset('storage/' . $application->cv->file_path) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-xl text-sm font-semibold hover:bg-blue-100">
+                    <i class="fa-solid fa-file-pdf"></i> View Submitted Resume ({{ $application->cv->title ?? 'CV' }})
+                </a>
                 @else
-                    <span class="text-sm text-slate-400">No CV attached.</span>
+                <span class="text-sm text-slate-400">No CV attached.</span>
                 @endif
             </div>
         </div>

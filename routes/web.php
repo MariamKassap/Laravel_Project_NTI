@@ -12,6 +12,7 @@ use App\Http\Controllers\Employer\ApplicationController as EmployerApplicationCo
 use App\Http\Controllers\Employer\EmployerProfileController;
 
 use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -44,27 +45,31 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
 // Route::get('/admin', function () {
 //    return view('admin.dashboard');
 //})->name('admin.dashboard');
+
 // Profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/image', [ProfileController::class, 'updateImage'])
-    ->name('profile.image.update');
+        ->name('profile.image.update');
 });
-
+//salma employer routes 
 Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('employer.')->group(function () {
 
-    
+
     Route::get('/dashboard', [EmployerDashboardController::class, 'index'])->name('dashboard');
 
-    
+
     Route::resource('jobs', EmployerJobController::class);
 
-    
+
     Route::get('/jobs/{job}/applications', [EmployerApplicationController::class, 'index'])->name('jobs.applications.index');
     Route::patch('/applications/{application}/status', [EmployerApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
 
+    //mariam added while testing 
+    Route::get('/applications/{application}', [EmployerApplicationController::class, 'show'])
+        ->name('applications.show');
 });
 
 require __DIR__ . '/auth.php';

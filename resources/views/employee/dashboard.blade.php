@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    ```
+
     <div class="min-h-screen bg-[#f8fafc]">
 
         <main class="max-w-[1400px] mx-auto px-6 lg:px-8 py-8">
