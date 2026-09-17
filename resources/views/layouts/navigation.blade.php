@@ -205,6 +205,14 @@
 
             @endif
 
+            <x-responsive-nav-link
+                :href="route('posts.index')"
+                :active="request()->routeIs('posts.*')">
+
+                Community
+
+            </x-responsive-nav-link>
+
         </div>
 
         <!-- Responsive Settings Options -->

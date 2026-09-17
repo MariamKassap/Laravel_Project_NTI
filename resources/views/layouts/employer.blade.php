@@ -35,6 +35,9 @@
                     <a href="{{ route('employer.jobs.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition {{ request()->routeIs('employer.jobs.applications.*') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800 text-slate-400' }}">
                         <i class="fa-solid fa-user-group"></i> Applicants
                     </a>
+                    <a href="{{ route('posts.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition {{ request()->routeIs('posts.*') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800 text-slate-400' }}">
+                        <i class="fa-solid fa-comments"></i> Community
+                    </a>
 
                     <!-- Static UI Elements -->
                     <div class="pt-4 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">Menu</div>
