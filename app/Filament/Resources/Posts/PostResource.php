@@ -14,6 +14,8 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use App\Filament\Resources\Posts\RelationManagers\MediaRelationManager;
+use App\Filament\Resources\Posts\RelationManagers\CommentsRelationManager;
+use App\Filament\Resources\Posts\RelationManagers\LikesRelationManager;
 
 class PostResource extends Resource
 {
@@ -37,9 +39,11 @@ class PostResource extends Resource
     {
         return [
             MediaRelationManager::class,
+            CommentsRelationManager::class,
+            LikesRelationManager::class,
         ];
     }
-
+    
     public static function getPages(): array
     {
         return [
