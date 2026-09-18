@@ -3,22 +3,22 @@
 @section('page_title', $job->title)
 
 @section('content')
-<div class="max-w-4xl mx-auto bg-white rounded-2xl border border-slate-100 shadow-sm p-8 space-y-8">
+<div class="max-w-4xl mx-auto bg-white rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_#000000] p-8 space-y-8">
 
     {{-- Header --}}
-    <div class="flex justify-between items-start border-b border-slate-100 pb-6">
+    <div class="flex justify-between items-start border-b-2 border-black pb-6">
         <div>
-            <h2 class="text-2xl font-bold text-slate-800">
+            <h2 class="text-2xl font-black text-black">
                 {{ $job->title }}
             </h2>
 
-            <div class="text-sm text-slate-400 mt-2">
+            <div class="text-sm font-bold text-slate-600 mt-2">
                 {{ auth()->user()->company ?? 'Company' }}
             </div>
         </div>
 
         <a href="{{ route('employer.jobs.index') }}"
-            class="text-sm text-slate-500 hover:text-slate-800 font-medium">
+            class="bg-white text-black font-bold border-2 border-black rounded-lg px-4 py-2 text-sm shadow-[2px_2px_0px_0px_#000000] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_#000000] transition">
             ← Back to Jobs
         </a>
     </div>
@@ -26,30 +26,30 @@
 
     {{-- Job Information --}}
     <div>
-        <h3 class="text-lg font-bold text-slate-800 mb-4">
+        <h3 class="text-lg font-black text-black mb-4">
             Job Information
         </h3>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
             {{-- Location --}}
-            <div class="bg-slate-50 rounded-xl p-4">
-                <div class="text-xs text-slate-400 uppercase font-semibold mb-1">
+            <div class="bg-white rounded-xl p-4 border-2 border-black shadow-[2px_2px_0px_0px_#000000]">
+                <div class="text-xs text-black uppercase font-bold mb-1">
                     Location
                 </div>
 
-                <div class="text-sm font-semibold text-slate-700">
+                <div class="text-sm font-bold text-black">
                     {{ $job->location ?? 'Not specified' }}
                 </div>
             </div>
 
             {{-- Job Type --}}
-            <div class="bg-slate-50 rounded-xl p-4">
-                <div class="text-xs text-slate-400 uppercase font-semibold mb-1">
+            <div class="bg-white rounded-xl p-4 border-2 border-black shadow-[2px_2px_0px_0px_#000000]">
+                <div class="text-xs text-black uppercase font-bold mb-1">
                     Job Type
                 </div>
 
-                <div class="text-sm font-semibold text-slate-700">
+                <div class="text-sm font-bold text-black">
                     {{ $job->job_type
                         ? ucwords(str_replace('_', ' ', $job->job_type))
                         : 'Not specified' }}
@@ -57,12 +57,12 @@
             </div>
 
             {{-- Salary --}}
-            <div class="bg-slate-50 rounded-xl p-4">
-                <div class="text-xs text-slate-400 uppercase font-semibold mb-1">
+            <div class="bg-white rounded-xl p-4 border-2 border-black shadow-[2px_2px_0px_0px_#000000]">
+                <div class="text-xs text-black uppercase font-bold mb-1">
                     Salary
                 </div>
 
-                <div class="text-sm font-semibold text-slate-700">
+                <div class="text-sm font-bold text-black">
                     {{ $job->salary !== null
                         ? '$' . number_format($job->salary, 2)
                         : 'Not specified' }}
@@ -70,12 +70,12 @@
             </div>
 
             {{-- Deadline --}}
-            <div class="bg-slate-50 rounded-xl p-4">
-                <div class="text-xs text-slate-400 uppercase font-semibold mb-1">
+            <div class="bg-white rounded-xl p-4 border-2 border-black shadow-[2px_2px_0px_0px_#000000]">
+                <div class="text-xs text-black uppercase font-bold mb-1">
                     Application Deadline
                 </div>
 
-                <div class="text-sm font-semibold text-slate-700">
+                <div class="text-sm font-bold text-black">
                     {{ $job->deadline
                         ? \Carbon\Carbon::parse($job->deadline)->format('M d, Y')
                         : 'No deadline' }}
@@ -83,23 +83,23 @@
             </div>
 
             {{-- Posted Date --}}
-            <div class="bg-slate-50 rounded-xl p-4">
-                <div class="text-xs text-slate-400 uppercase font-semibold mb-1">
+            <div class="bg-white rounded-xl p-4 border-2 border-black shadow-[2px_2px_0px_0px_#000000]">
+                <div class="text-xs text-black uppercase font-bold mb-1">
                     Posted Date
                 </div>
 
-                <div class="text-sm font-semibold text-slate-700">
+                <div class="text-sm font-bold text-black">
                     {{ $job->created_at->format('M d, Y') }}
                 </div>
             </div>
 
             {{-- Last Updated --}}
-            <div class="bg-slate-50 rounded-xl p-4">
-                <div class="text-xs text-slate-400 uppercase font-semibold mb-1">
+            <div class="bg-white rounded-xl p-4 border-2 border-black shadow-[2px_2px_0px_0px_#000000]">
+                <div class="text-xs text-black uppercase font-bold mb-1">
                     Last Updated
                 </div>
 
-                <div class="text-sm font-semibold text-slate-700">
+                <div class="text-sm font-bold text-black">
                     {{ $job->updated_at->format('M d, Y') }}
                 </div>
             </div>
@@ -109,32 +109,32 @@
 
 
     {{-- Description --}}
-    <div class="border-t border-slate-100 pt-6">
-        <h3 class="text-lg font-bold text-slate-800 mb-3">
+    <div class="border-t-2 border-black pt-6">
+        <h3 class="text-lg font-black text-black mb-3">
             Job Description
         </h3>
 
-        <p class="text-slate-600 leading-relaxed whitespace-pre-line">
+        <p class="text-black font-medium leading-relaxed whitespace-pre-line">
             {{ $job->description }}
         </p>
     </div>
 
 
     {{-- Actions --}}
-    <div class="border-t border-slate-100 pt-6 flex justify-end gap-3">
+    <div class="border-t-2 border-black pt-6 flex justify-end gap-3">
 
         <a href="{{ route('employer.jobs.applications.index', $job->id) }}"
-            class="px-5 py-2.5 bg-blue-50 text-blue-600 rounded-xl text-sm font-semibold hover:bg-blue-100">
+            class="bg-[#2563EB] text-white font-bold border-2 border-black rounded-lg px-4 py-2 text-sm shadow-[2px_2px_0px_0px_#000000] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_#000000] transition">
             View Applicants
         </a>
 
         <a href="{{ route('employer.jobs.edit', $job->id) }}"
-            class="px-5 py-2.5 bg-amber-50 text-amber-600 rounded-xl text-sm font-semibold hover:bg-amber-100">
+            class="bg-amber-300 text-black font-bold border-2 border-black rounded-lg px-4 py-2 text-sm shadow-[2px_2px_0px_0px_#000000] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_#000000] transition">
             Edit Job
         </a>
 
         <!-- <a href="{{ route('employer.jobs.index') }}"
-            class="px-5 py-2.5 border border-slate-200 text-slate-600 rounded-xl text-sm font-semibold hover:bg-slate-50">
+            class="bg-white text-black font-bold border-2 border-black rounded-lg px-4 py-2 text-sm shadow-[2px_2px_0px_0px_#000000] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_#000000] transition">
             Back to Jobs
         </a> -->
 

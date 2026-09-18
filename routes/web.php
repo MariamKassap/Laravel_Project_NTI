@@ -18,7 +18,31 @@ use App\Http\Controllers\Post\CommentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $activeJobsCount = \App\Models\Job::where(function ($q) {
+        $q->whereNull('deadline')->orWhereDate('deadline', '>=', today());
+    })->count();
+    $totalJobsCount = \App\Models\Job::count();
+    $candidatesCount = \App\Models\User::where('role', 'employee')->count();
+    $discussionsCount = \App\Models\Post::count();
+    $totalApplications = \App\Models\Application::count();
+    $acceptedApplications = \App\Models\Application::where('status', 'accepted')->count();
+    $placementRate = $totalApplications > 0 ? (int) round($acceptedApplications / $totalApplications * 100) : null;
+
+    $featuredPost = \App\Models\Post::with(['user', 'likes', 'comments'])->latest()->first();
+    $latestPosts = \App\Models\Post::with(['user', 'likes', 'comments'])->latest()->take(3)->get();
+    $latestJobs = \App\Models\Job::with('employer')->latest()->take(4)->get();
+
+    return view('welcome', compact(
+        'activeJobsCount',
+        'totalJobsCount',
+        'candidatesCount',
+        'discussionsCount',
+        'totalApplications',
+        'placementRate',
+        'featuredPost',
+        'latestPosts',
+        'latestJobs'
+    ));
 });
 
 //mariam employee routes
@@ -50,7 +74,10 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
 //    return view('admin.dashboard');
 //})->name('admin.dashboard');
 
-// Profile + Posts
+// Community — public read, auth required to interact
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
+// Profile + Posts (auth required to interact)
 Route::middleware('auth')->group(function () {
 
     // Profile
@@ -69,10 +96,6 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile/cv/{cv}', [ProfileController::class, 'destroyCV'])
         ->name('profile.cv.destroy');
-
-    // Posts
-    Route::get('/posts', [PostController::class, 'index'])
-        ->name('posts.index');
 
     Route::get('/posts/create', [PostController::class, 'create'])
         ->name('posts.create');

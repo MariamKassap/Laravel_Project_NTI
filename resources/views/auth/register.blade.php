@@ -15,18 +15,14 @@
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
+
         <!-- Role -->
         <div class="mt-4">
             <x-input-label for="role" :value="__('Register as')" />
 
             <select id="role" name="role"
-                class="block mt-1 w-full border-gray-300 dark:border-gray-700
-                   dark:bg-gray-900 dark:text-gray-300
-                   focus:border-indigo-500 dark:focus:border-indigo-600
-                   focus:ring-indigo-500 dark:focus:ring-indigo-600
-                   rounded-md shadow-sm"
+                class="block mt-1 w-full bg-white border-2 border-black rounded-lg px-3 py-2 text-black shadow-[2px_2px_0px_0px_#000000] focus:ring-0 focus:outline-none focus:border-black"
                 required>
-
                 <option value="">Select your role</option>
                 <option value="employee" {{ old('role') == 'employee' ? 'selected' : '' }}>
                     Employee
@@ -34,7 +30,6 @@
                 <option value="employer" {{ old('role') == 'employer' ? 'selected' : '' }}>
                     Employer
                 </option>
-
             </select>
 
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
@@ -45,29 +40,26 @@
             <x-input-label for="password" :value="__('Password')" />
 
             <div x-data="{ show: false }" class="relative mt-1">
-
                 <input
                     id="password"
                     name="password"
                     required
                     autocomplete="new-password"
                     :type="show ? 'text' : 'password'"
-                    class="block w-full rounded-md border-gray-300
-                   dark:border-gray-700 dark:bg-gray-900
-                   dark:text-gray-300 pr-12">
+                    class="block w-full bg-white border-2 border-black rounded-lg px-3 py-2 text-black shadow-[2px_2px_0px_0px_#000000] placeholder:text-gray-500 focus:ring-0 focus:outline-none focus:border-black pr-12">
 
                 <button
                     type="button"
                     @click="show = !show"
-                    class="absolute inset-y-0 right-0 z-10 flex items-center px-3 text-gray-500">
+                    class="absolute inset-y-0 right-0 z-10 flex items-center px-3 text-black hover:text-[#2563EB] transition-colors">
                     <i x-show="!show" class="fa-solid fa-eye"></i>
                     <i x-show="show" class="fa-solid fa-eye-slash"></i>
                 </button>
-
             </div>
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
+
         <!-- Confirm Password -->
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
@@ -80,7 +72,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
+            <a class="underline text-sm font-bold text-black hover:text-[#2563EB] rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transition-colors" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 

@@ -8,44 +8,44 @@
 @php
 $styles = [
 'blue' => [
-'bg' => 'bg-[#eff6ff]',
-'text' => 'text-[#3b82f6]',
+'bg' => 'bg-blue-200',
+'text' => 'text-black',
 ],
 'green' => [
-'bg' => 'bg-emerald-50',
-'text' => 'text-emerald-500',
+'bg' => 'bg-emerald-300',
+'text' => 'text-black',
 ],
 'yellow' => [
-'bg' => 'bg-amber-50',
-'text' => 'text-amber-500',
+'bg' => 'bg-amber-300',
+'text' => 'text-black',
 ],
 'red' => [
-'bg' => 'bg-red-50',
-'text' => 'text-red-500',
+'bg' => 'bg-rose-300',
+'text' => 'text-black',
 ],
 ];
 
 $style = $styles[$type] ?? $styles['blue'];
 @endphp
 
-<div class="bg-white border border-[#e2e8f0] rounded-xl p-6">
+<div class="bg-white border-2 border-black rounded-xl p-5 shadow-[4px_4px_0px_0px_#000000]">
     <div class="flex items-start justify-between">
 
         <div>
-            <p class="text-sm text-[#64748b]">
+            <p class="text-sm font-bold text-black">
                 {{ $title }}
             </p>
 
-            <p class="mt-3 text-3xl font-bold text-[#1e2d4f]">
+            <p class="mt-3 text-3xl font-black text-black">
                 {{ $value }}
             </p>
 
-            <p class="mt-2 text-sm {{ $style['text'] }}">
+            <p class="mt-2 text-sm font-bold {{ $style['text'] }}">
                 {{ $description }}
             </p>
         </div>
 
-        <div class="w-10 h-10 rounded-lg {{ $style['bg'] }} flex items-center justify-center">
+        <div class="w-10 h-10 rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] {{ $style['bg'] }} flex items-center justify-center">
 
             <svg class="w-5 h-5 {{ $style['text'] }}"
                 fill="none"

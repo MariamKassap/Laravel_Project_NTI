@@ -4,17 +4,17 @@
 
 @section('content')
 
-<div class="max-w-3xl mx-auto bg-white rounded-2xl border border-slate-100 shadow-sm p-8 space-y-6">
+<div class="max-w-3xl mx-auto bg-white rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_#000000] p-8 space-y-6">
 
     {{-- Applicant Header --}}
-    <div class="flex justify-between items-center border-b border-slate-100 pb-6">
+    <div class="flex justify-between items-center border-b-2 border-black pb-6">
 
         <div>
-            <h2 class="text-2xl font-bold text-slate-800">
+            <h2 class="text-2xl font-black text-black">
                 {{ $application->employee->name }}
             </h2>
 
-            <p class="text-sm text-slate-400">
+            <p class="text-sm font-bold text-slate-600">
                 {{ $application->employee->email }}
             </p>
         </div>
@@ -31,7 +31,7 @@
             <select
                 name="status"
                 onchange="this.form.submit()"
-                class="text-xs font-semibold px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none">
+                class="bg-white border-2 border-black rounded-lg px-3 py-2 text-xs font-bold text-black shadow-[2px_2px_0px_0px_#000000] focus:outline-none focus:ring-0">
 
                 <option
                     value="pending"
@@ -69,15 +69,15 @@
 
         {{-- Applicant --}}
         <div>
-            <label class="text-xs font-semibold text-slate-400 uppercase">
+            <label class="text-xs font-bold text-black uppercase">
                 Applicant
             </label>
 
-            <div class="text-slate-800 font-semibold mt-1">
+            <div class="text-black font-bold mt-1">
                 {{ $application->employee->name }}
             </div>
 
-            <div class="text-sm text-slate-500 mt-1">
+            <div class="text-sm font-bold text-slate-600 mt-1">
                 {{ $application->employee->email }}
             </div>
         </div>
@@ -85,11 +85,11 @@
 
         {{-- Applied For --}}
         <div>
-            <label class="text-xs font-semibold text-slate-400 uppercase">
+            <label class="text-xs font-bold text-black uppercase">
                 Applied For
             </label>
 
-            <div class="text-slate-800 font-bold mt-1">
+            <div class="text-black font-black mt-1">
                 {{ $application->job->title }}
             </div>
         </div>
@@ -97,7 +97,7 @@
 
         {{-- Application Status --}}
         <div>
-            <label class="text-xs font-semibold text-slate-400 uppercase">
+            <label class="text-xs font-bold text-black uppercase">
                 Current Status
             </label>
 
@@ -105,25 +105,25 @@
 
                 @if($application->status === 'pending')
 
-                <span class="inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">
+                <span class="inline-flex px-3 py-1 rounded-full text-xs font-bold bg-amber-300 text-black border border-black">
                     Pending
                 </span>
 
                 @elseif($application->status === 'waiting_list')
 
-                <span class="inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
+                <span class="inline-flex px-3 py-1 rounded-full text-xs font-bold bg-blue-200 text-black border border-black">
                     Waiting List
                 </span>
 
                 @elseif($application->status === 'accepted')
 
-                <span class="inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
+                <span class="inline-flex px-3 py-1 rounded-full text-xs font-bold bg-emerald-300 text-black border border-black">
                     Accepted
                 </span>
 
                 @elseif($application->status === 'rejected')
 
-                <span class="inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">
+                <span class="inline-flex px-3 py-1 rounded-full text-xs font-bold bg-rose-300 text-black border border-black">
                     Rejected
                 </span>
 
@@ -135,7 +135,7 @@
 
         {{-- Submitted CV --}}
         <div>
-            <label class="text-xs font-semibold text-slate-400 uppercase">
+            <label class="text-xs font-bold text-black uppercase">
                 Submitted CV
             </label>
 
@@ -146,7 +146,7 @@
                 <a
                     href="{{ asset('storage/' . $application->cv->file_path) }}"
                     target="_blank"
-                    class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-xl text-sm font-semibold hover:bg-blue-100">
+                    class="inline-flex items-center gap-2 px-4 py-2 bg-[#2563EB] text-white font-bold border-2 border-black rounded-lg text-sm shadow-[2px_2px_0px_0px_#000000] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_#000000] transition">
 
                     <i class="fa-solid fa-file-pdf"></i>
 
@@ -157,7 +157,7 @@
 
                 @else
 
-                <span class="text-sm text-slate-400">
+                <span class="text-sm font-bold text-slate-500">
                     No CV attached.
                 </span>
 
@@ -169,11 +169,11 @@
 
         {{-- Application Date --}}
         <div>
-            <label class="text-xs font-semibold text-slate-400 uppercase">
+            <label class="text-xs font-bold text-black uppercase">
                 Applied On
             </label>
 
-            <div class="text-slate-700 mt-1">
+            <div class="text-black font-bold mt-1">
                 {{ $application->created_at->format('M d, Y h:i A') }}
             </div>
         </div>
@@ -182,11 +182,11 @@
 
 
     {{-- Actions --}}
-    <div class="border-t border-slate-100 pt-6 flex items-center justify-between">
+    <div class="border-t-2 border-black pt-6 flex items-center justify-between">
 
         <a
             href="{{ route('employer.jobs.applications.index', $application->job->id) }}"
-            class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-xl text-sm font-semibold hover:bg-slate-200">
+            class="bg-white text-black font-bold border-2 border-black rounded-lg px-4 py-2 text-sm shadow-[2px_2px_0px_0px_#000000] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_#000000] transition">
 
             ← Back to Applicants
 
@@ -194,7 +194,7 @@
 
         <a
             href="{{ route('employer.jobs.show', $application->job->id) }}"
-            class="px-5 py-2.5 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700">
+            class="bg-[#2563EB] text-white font-bold border-2 border-black rounded-lg px-4 py-2 text-sm shadow-[2px_2px_0px_0px_#000000] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_#000000] transition">
 
             View Job
 
