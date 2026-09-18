@@ -18,7 +18,31 @@ use App\Http\Controllers\Post\CommentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $activeJobsCount = \App\Models\Job::where(function ($q) {
+        $q->whereNull('deadline')->orWhereDate('deadline', '>=', today());
+    })->count();
+    $totalJobsCount = \App\Models\Job::count();
+    $candidatesCount = \App\Models\User::where('role', 'employee')->count();
+    $discussionsCount = \App\Models\Post::count();
+    $totalApplications = \App\Models\Application::count();
+    $acceptedApplications = \App\Models\Application::where('status', 'accepted')->count();
+    $placementRate = $totalApplications > 0 ? (int) round($acceptedApplications / $totalApplications * 100) : null;
+
+    $featuredPost = \App\Models\Post::with(['user', 'likes', 'comments'])->latest()->first();
+    $latestPosts = \App\Models\Post::with(['user', 'likes', 'comments'])->latest()->take(3)->get();
+    $latestJobs = \App\Models\Job::with('employer')->latest()->take(4)->get();
+
+    return view('welcome', compact(
+        'activeJobsCount',
+        'totalJobsCount',
+        'candidatesCount',
+        'discussionsCount',
+        'totalApplications',
+        'placementRate',
+        'featuredPost',
+        'latestPosts',
+        'latestJobs'
+    ));
 });
 
 //mariam employee routes
@@ -44,13 +68,10 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
     Route::get('/employee/jobs/{job}', [EmployeeJobController::class, 'show'])->name('employee.job.show');
 });
 
+// Community — public read, auth required to interact
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
-// Admin Dashboard
-// Route::get('/admin', function () {
-//    return view('admin.dashboard');
-//})->name('admin.dashboard');
-
-// Profile + Posts
+// Profile + Posts (auth required to interact)
 Route::middleware('auth')->group(function () {
 
     // Profile
@@ -63,9 +84,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/image', [ProfileController::class, 'updateImage'])
         ->name('profile.image.update');
 
-    // Posts
-    Route::get('/posts', [PostController::class, 'index'])
-        ->name('posts.index');
+    //posts by mariam 
+    Route::post('/profile/cv', [ProfileController::class, 'storeCV'])
+        ->name('profile.cv.store');
+
+    Route::delete('/profile/cv/{cv}', [ProfileController::class, 'destroyCV'])
+        ->name('profile.cv.destroy');
 
     Route::get('/posts/create', [PostController::class, 'create'])
         ->name('posts.create');
@@ -110,13 +134,19 @@ Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('empl
 
     Route::resource('jobs', EmployerJobController::class);
 
-    Route::get('/jobs/{job}/applications', [EmployerApplicationController::class, 'index'])->name('jobs.applications.index');
+    // Route::get('/jobs/{job}/applications', [EmployerApplicationController::class, 'index'])->name('jobs.applications.index');
 
     Route::patch('/applications/{application}/status', [EmployerApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
+
+    // List all applications received by the employer
+    Route::get('/applications', [EmployerApplicationController::class, 'index'])
+        ->name('applications.index');
 
     //mariam added while testing 
     Route::get('/applications/{application}', [EmployerApplicationController::class, 'show'])
         ->name('applications.show');
+    Route::get('/jobs/{job}/applications', [EmployerApplicationController::class, 'jobApplications'])
+        ->name('jobs.applications.index');
 });
 
 require __DIR__ . '/auth.php';

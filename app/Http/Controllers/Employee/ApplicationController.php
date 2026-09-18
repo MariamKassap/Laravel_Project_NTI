@@ -22,6 +22,12 @@ class ApplicationController extends Controller
 
     public function create(Job $job)
     {
+        if ($job->deadline && now()->startOfDay()->gt(\Carbon\Carbon::parse($job->deadline)->startOfDay())) {
+            return redirect()
+                ->route('employee.job.show', $job)
+                ->with('error', 'The application deadline has passed.');
+        }
+
         $cvs = CV::where('user_id', Auth::id())
             ->latest()
             ->get();
@@ -31,18 +37,56 @@ class ApplicationController extends Controller
 
     public function store(Request $request, Job $job)
     {
+        if ($job->deadline && now()->startOfDay()->gt($job->deadline)) {
+            return back()->with('error', 'The application deadline has passed.');
+        }
 
         $employeeId = Auth::id();
 
-        if (Application::where('user_id', $employeeId)->where('job_id', $job->id)->exists()) {
+        if (Application::where('user_id', $employeeId)
+            ->where('job_id', $job->id)
+            ->exists()
+        ) {
 
             return back()->with('error', 'You have already applied for this job.');
         }
 
-        $request->validate(['cv_id' => 'required|exists:cvs,id',]);
+        $request->validate([
+            'cv_id' => ['nullable', 'integer'],
+            'new_cv' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:5120'],
+        ]);
 
-        // Make sure the selected CV belongs to this employee
-        $cv = CV::where('id', $request->cv_id)->where('user_id', $employeeId)->firstOrFail();
+        // Employee must choose an existing CV OR upload a new one
+        if (!$request->cv_id && !$request->hasFile('new_cv')) {
+            return back()->withErrors([
+                'cv_id' => 'Please choose an existing CV or upload a new CV.',
+            ])->withInput();
+        }
+
+        //Existing CV
+
+        if ($request->cv_id) {
+
+            // Make sure the selected CV belongs to this employee
+            $cv = CV::where('id', $request->cv_id)
+                ->where('user_id', $employeeId)
+                ->firstOrFail();
+
+            // New CV
+
+        } else {
+
+            $path = $request->file('new_cv')->store('cvs', 'public');
+
+            $cv = CV::create([
+                'user_id' => $employeeId,
+                'title' => 'CV for ' . $job->title,
+                'file_path' => $path,
+            ]);
+        }
+
+        // | Create Application
+
 
         Application::create([
             'user_id' => $employeeId,
@@ -51,7 +95,9 @@ class ApplicationController extends Controller
             'status' => 'pending',
         ]);
 
-        return redirect()->route('employee.applications.index')->with('success', 'Application submitted successfully.');
+        return redirect()
+            ->route('employee.applications.index')
+            ->with('success', 'Application submitted successfully.');
     }
 
 

@@ -25,7 +25,9 @@ class DashboardController extends Controller
 
         $recentApplications = Application::where('user_id', $employee->id)->with('job')->latest()->take(5)->get();
 
-        $availableJobs = Job::latest()->take(5)->get();
+        $availableJobs = Job::whereDoesntHave('applications', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->latest()->take(5)->get();
 
 
         return view('employee.dashboard', compact(

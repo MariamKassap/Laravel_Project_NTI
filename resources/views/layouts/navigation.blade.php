@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-white border-b-2 border-black">
 
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -10,14 +10,14 @@
                 <div class="shrink-0 flex items-center">
 
                     @if (auth()->user()->role === 'employee')
-                    <a href="{{ route('employee.dashboard') }}">
+                    <a href="{{ route('employee.dashboard') }}" class="flex items-center gap-2 font-black text-black">
                         @elseif (auth()->user()->role === 'employer')
-                        <a href="{{ route('employer.dashboard') }}">
+                        <a href="{{ route('employer.dashboard') }}" class="flex items-center gap-2 font-black text-black">
                             @elseif (auth()->user()->role === 'admin')
-                            <a href="{{ route('admin.dashboard') }}">
+                            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 font-black text-black">
                                 @endif
 
-                                <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                                <x-application-logo class="block h-9 w-auto fill-current text-black" />
 
                                 @if (auth()->user()->role === 'employee')
                             </a>
@@ -30,7 +30,7 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-2 sm:-my-px sm:ms-10 sm:flex items-center">
 
                     @if (auth()->user()->role === 'employee')
 
@@ -76,7 +76,7 @@
 
                     <x-slot name="trigger">
 
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-4 py-2 bg-white border-2 border-black rounded-lg text-sm leading-4 font-bold text-black shadow-[2px_2px_0px_0px_#000000] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_#000000] focus:outline-none transition ease-in-out duration-150">
 
                             <div>{{ Auth::user()->name }}</div>
 
@@ -133,7 +133,7 @@
 
                 <button
                     @click="open = ! open"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+                    class="inline-flex items-center justify-center p-2 bg-white border-2 border-black rounded-lg text-black shadow-[2px_2px_0px_0px_#000000] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_#000000] focus:outline-none transition duration-150 ease-in-out">
 
                     <svg class="h-6 w-6"
                         stroke="currentColor"
@@ -169,9 +169,9 @@
 
     <div
         :class="{'block': open, 'hidden': ! open}"
-        class="hidden sm:hidden">
+        class="hidden sm:hidden bg-[#F4F0EA] border-t-2 border-black">
 
-        <div class="pt-2 pb-3 space-y-1">
+        <div class="pt-2 pb-3 space-y-1 bg-white border-b-2 border-black px-2">
 
             @if (auth()->user()->role === 'employee')
 
@@ -217,21 +217,21 @@
 
         <!-- Responsive Settings Options -->
 
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+        <div class="pt-4 pb-1 border-t-2 border-black bg-[#EFECE6]">
 
             <div class="px-4">
 
-                <div class="font-medium text-base text-gray-800 dark:text-gray-200">
+                <div class="font-bold text-base text-black">
                     {{ Auth::user()->name }}
                 </div>
 
-                <div class="font-medium text-sm text-gray-500">
+                <div class="font-semibold text-sm text-slate-600">
                     {{ Auth::user()->email }}
                 </div>
 
             </div>
 
-            <div class="mt-3 space-y-1">
+            <div class="mt-3 space-y-1 bg-white border-y-2 border-black">
 
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}

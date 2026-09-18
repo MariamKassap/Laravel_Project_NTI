@@ -1,82 +1,176 @@
+@php $title = 'Employer Home'; @endphp
 @extends('layouts.employer')
 
-@section('page_title', 'Employer Dashboard')
+@section('page_title', 'Home')
 
 @section('content')
-<div class="space-y-8">
-    <!-- Welcome Banner -->
-    <div class="bg-gradient-to-r from-[#1E293B] to-[#0F172A] rounded-2xl p-8 text-white flex justify-between items-center shadow-md">
+{{-- Unified Neo-Brutalist container shell --}}
+<div class="bg-white border-2 border-black shadow-[6px_6px_0px_0px_#000000] rounded-2xl p-6 space-y-8">
+
+    <h1 class="text-2xl font-black text-black">Home</h1>
+    <p class="text-sm font-bold text-black -mt-6">Welcome to Anti-عواطلي, {{ auth()->user()->name }}</p>
+
+    {{-- Welcome / Post New Job Action Banner — muted warm vintage --}}
+    <div class="bg-[#FEF9C3] border-2 border-black rounded-xl p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-[4px_4px_0px_0px_#000000]">
         <div>
-            <h2 class="text-2xl font-bold mb-2">Welcome back, {{ auth()->user()->company ?? auth()->user()->name }}!</h2>
-            <p class="text-slate-300 text-sm">Manage your open positions and review candidate applications.</p>
+            <h2 class="text-xl font-black text-black">
+                Ready to hire?
+            </h2>
+            <p class="text-sm font-bold text-black mt-1">
+                Post a new opportunity and reach {{ number_format($totalApplicationsCount) }}+ candidates.
+            </p>
         </div>
-        <a href="{{ route('employer.jobs.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-3 rounded-xl flex items-center gap-2 transition">
-            <i class="fa-solid fa-circle-plus"></i> Post New Job
+
+        <a
+            href="{{ route('employer.jobs.create') }}"
+            class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold border-2 border-black rounded-lg px-4 py-2 shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-2 transition">
+            <i class="fa-solid fa-circle-plus"></i>
+            Post New Job
         </a>
     </div>
 
-    <!-- Stat Cards -->
-    <div class="grid grid-cols-4 gap-6">
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-start justify-between">
+
+    {{-- Statistics — Active Jobs / Total Applicants / Open Roles --}}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        {{-- Active Jobs --}}
+        <div class="bg-white p-6 rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_#000000] flex items-start justify-between">
+
             <div>
-                <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Active Jobs</div>
-                <div class="text-3xl font-bold text-slate-800">{{ $totalJobsCount }}</div>
-                <div class="text-xs text-blue-600 mt-2 font-medium">Steady hiring pace</div>
+                <div class="text-xs font-bold text-black uppercase tracking-wider mb-2">
+                    Active Jobs
+                </div>
+
+                <div class="text-3xl font-black text-black">
+                    {{ $activeJobsCount }}
+                </div>
+
+                <div class="text-xs text-black mt-2 font-bold">
+                    Currently accepting applications
+                </div>
             </div>
-            <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center"><i class="fa-solid fa-briefcase"></i></div>
+
+            <div class="w-10 h-10 bg-blue-200 text-black rounded-lg flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_0px_#000000]">
+                <i class="fa-solid fa-briefcase"></i>
+            </div>
+
         </div>
 
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-start justify-between">
+
+        {{-- Total Applicants --}}
+        <div class="bg-white p-6 rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_#000000] flex items-start justify-between">
+
             <div>
-                <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Total Applicants</div>
-                <div class="text-3xl font-bold text-slate-800">{{ $totalApplicationsCount }}</div>
-                <div class="text-xs text-blue-600 mt-2 font-medium">Across all jobs</div>
+                <div class="text-xs font-bold text-black uppercase tracking-wider mb-2">
+                    Total Applicants
+                </div>
+
+                <div class="text-3xl font-black text-black">
+                    {{ $totalApplicationsCount }}
+                </div>
+
+                <div class="text-xs text-black mt-2 font-bold">
+                    Across all jobs
+                </div>
             </div>
-            <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
+
+            <div class="w-10 h-10 bg-amber-300 text-black rounded-lg flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_0px_#000000]">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
         </div>
 
-        <!-- Static Stat Placeholders (Matching Design) -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-start justify-between opacity-80">
+
+        {{-- Open Roles / Expired + Accepted merged as Open Roles --}}
+        <div class="bg-white p-6 rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_#000000] flex items-start justify-between">
+
             <div>
-                <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Interviews Scheduled</div>
-                <div class="text-3xl font-bold text-slate-800">12</div>
-                <div class="text-xs text-slate-400 mt-2">Next tomorrow</div>
+                <div class="text-xs font-bold text-black uppercase tracking-wider mb-2">
+                    Open Roles
+                </div>
+
+                <div class="text-3xl font-black text-black">
+                    {{ $activeJobsCount }}
+                </div>
+
+                <div class="text-xs text-black mt-2 font-bold">
+                    {{ $acceptedApplicationsCount }} accepted • {{ $expiredJobsCount }} expired
+                </div>
             </div>
-            <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center"><i class="fa-regular fa-calendar-check"></i></div>
+
+            <div class="w-10 h-10 bg-emerald-300 text-black rounded-lg flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_0px_#000000]">
+                <i class="fa-solid fa-user-check"></i>
+            </div>
+
         </div>
 
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-start justify-between opacity-80">
-            <div>
-                <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Hires This Month</div>
-                <div class="text-3xl font-bold text-slate-800">3</div>
-                <div class="text-xs text-slate-400 mt-2">Target: 5 hires</div>
-            </div>
-            <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center"><i class="fa-solid fa-paper-plane"></i></div>
-        </div>
     </div>
 
-    <!-- Job Postings List -->
-    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
+
+    {{-- Recent Job Postings --}}
+    <div class="bg-white rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_#000000] p-6">
+
         <div class="flex items-center justify-between mb-6">
-            <h3 class="font-bold text-slate-800 text-lg">Active Job Postings</h3>
-            <a href="{{ route('employer.jobs.index') }}" class="text-sm font-semibold text-blue-600 hover:text-blue-700">Manage All</a>
+            <h3 class="font-black text-black text-lg">
+                Recent Job Postings
+            </h3>
+
+            <a
+                href="{{ route('employer.jobs.index') }}"
+                class="bg-white text-black font-bold border-2 border-black rounded-lg px-4 py-2 text-sm shadow-[2px_2px_0px_0px_#000000] hover:bg-slate-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition">
+                Manage All
+            </a>
         </div>
-        <div class="divide-y divide-slate-100">
+
+        <div class="divide-y-2 divide-black">
             @forelse($recentJobs as $job)
-                <div class="py-4 flex items-center justify-between first:pt-0 last:pb-0">
-                    <div>
-                        <div class="font-bold text-slate-800">{{ $job->title }}</div>
-                        <div class="text-xs text-slate-400 mt-1">Posted {{ $job->created_at->diffForHumans() }}</div>
+            <div class="py-4 flex items-center justify-between first:pt-0 last:pb-0">
+                {{-- Job Information --}}
+                <div>
+                    <div class="font-bold text-black">
+                        {{ $job->title }}
                     </div>
-                    <div class="flex items-center gap-6">
-                        <span class="text-sm font-medium text-blue-600 bg-blue-50 px-3 py-1 rounded-full">{{ $job->applications_count }} Applicants</span>
-                        <span class="text-xs font-semibold bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full">Active</span>
+                    <div class="text-xs font-bold text-black mt-1">
+                        Posted {{ $job->created_at->diffForHumans() }}
                     </div>
+                    @if($job->deadline)
+                    <div class="text-xs font-bold text-black mt-1">
+                        Deadline:
+                        {{ \Carbon\Carbon::parse($job->deadline)->format('M d, Y') }}
+                    </div>
+                    @else
+                    <div class="text-xs font-bold text-black mt-1">
+                        No deadline
+                    </div>
+                    @endif
                 </div>
+
+                {{-- Job Status --}}
+                <div class="flex items-center gap-3">
+                    <span class="text-sm font-bold text-black bg-blue-200 px-3 py-1 rounded-full border-2 border-black shadow-[1px_1px_0px_0px_#000000]">
+                        {{ $job->applications_count }}
+                        {{ $job->applications_count == 1 ? 'Applicant' : 'Applicants' }}
+                    </span>
+
+                    @if($job->deadline && \Carbon\Carbon::parse($job->deadline)->isBefore(today()))
+                    <span class="text-xs font-bold bg-rose-300 text-black px-2.5 py-1 rounded-full border-2 border-black shadow-[1px_1px_0px_0px_#000000]">
+                        Expired
+                    </span>
+                    @else
+                    <span class="text-xs font-bold bg-emerald-300 text-black px-2.5 py-1 rounded-full border-2 border-black shadow-[1px_1px_0px_0px_#000000]">
+                        Active
+                    </span>
+                    @endif
+                </div>
+            </div>
             @empty
-                <div class="py-8 text-center text-slate-400 text-sm">No jobs posted yet.</div>
+            <div class="py-8 text-center text-black text-sm font-bold">
+                No jobs posted yet.
+            </div>
             @endforelse
         </div>
+
     </div>
+
 </div>
 @endsection
