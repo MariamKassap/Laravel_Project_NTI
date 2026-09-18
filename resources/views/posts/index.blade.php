@@ -23,8 +23,8 @@
                     <span class="posts-hero-badge inline-flex items-center px-2.5 py-1 rounded-md text-xs font-black tracking-widest border border-black bg-blue-200 text-black shadow-[1px_1px_0px_0px_#000000]">COMMUNITY FEED</span>
                     <h1 class="posts-title text-3xl font-black text-black tracking-tight mt-3">All Posts</h1>
                     <p class="posts-subtitle text-sm font-bold text-slate-600 mt-1 max-w-lg">
-                        <!-- Share your thoughts, ideas, and opportunities with the community. -->
-                        خليك اجتماعي
+                       Share your thoughts, ideas, and opportunities with the community. 
+                         
                     </p>
                 </div>
 
