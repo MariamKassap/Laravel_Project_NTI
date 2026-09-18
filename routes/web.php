@@ -134,7 +134,7 @@ Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('empl
 
     Route::resource('jobs', EmployerJobController::class);
 
-    Route::get('/jobs/{job}/applications', [EmployerApplicationController::class, 'index'])->name('jobs.applications.index');
+    // Route::get('/jobs/{job}/applications', [EmployerApplicationController::class, 'index'])->name('jobs.applications.index');
 
     Route::patch('/applications/{application}/status', [EmployerApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
 
@@ -145,6 +145,8 @@ Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('empl
     //mariam added while testing 
     Route::get('/applications/{application}', [EmployerApplicationController::class, 'show'])
         ->name('applications.show');
+    Route::get('/jobs/{job}/applications', [EmployerApplicationController::class, 'jobApplications'])
+        ->name('jobs.applications.index');
 });
 
 require __DIR__ . '/auth.php';

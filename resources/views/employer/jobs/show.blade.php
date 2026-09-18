@@ -123,7 +123,8 @@
     {{-- Actions --}}
     <div class="border-t-2 border-black pt-6 flex justify-end gap-3">
 
-        <a href="{{ route('employer.jobs.applications.index', $job->id) }}"
+
+        <a href="{{ route('employer.jobs.applications.index', ['job' => $job->id]) }}"
             class="bg-[#2563EB] text-white font-bold border-2 border-black rounded-lg px-4 py-2 text-sm shadow-[2px_2px_0px_0px_#000000] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_#000000] transition">
             View Applicants
         </a>

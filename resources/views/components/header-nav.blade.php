@@ -42,10 +42,10 @@ default => url('/'),
             {{-- Far Right: Search + Bell + Profile Dropdown --}}
             <div class="flex items-center gap-3">
                 {{-- Search --}}
-                <div class="hidden sm:flex relative">
+                <!-- <div class="hidden sm:flex relative">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-black text-xs"></i>
                     <input type="text" placeholder="Search..." class="w-44 lg:w-56 bg-white border-2 border-black rounded-lg pl-8 pr-3 py-1.5 text-sm font-bold text-black placeholder:text-black/50 shadow-[2px_2px_0px_0px_#000000] focus:outline-none focus:ring-0 focus:border-black">
-                </div>
+                </div> -->
 
                 {{-- Notifications — single bell --}}
                 <!-- <button class="w-9 h-9 bg-white border-2 border-black rounded-lg flex items-center justify-center text-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all" title="Notifications">
