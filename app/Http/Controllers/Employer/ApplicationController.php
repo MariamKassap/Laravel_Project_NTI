@@ -9,22 +9,17 @@ use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
-    public function index(Request $request, Job $job)
+    public function index(Request $request)
     {
-        // Make sure this job belongs to the logged-in employer
-        if ($job->user_id !== $request->user()->id) {
-            abort(403, 'Unauthorized access.');
-        }
-
-        // Get applications ONLY for this specific job
-        $applications = Application::where('job_id', $job->id)
+        $applications = Application::whereHas('job', function ($query) use ($request) {
+            $query->where('user_id', $request->user()->id);
+        })
             ->with(['employee', 'job', 'cv'])
             ->latest()
             ->paginate(10);
 
-        return view('employer.applications.index', compact('applications', 'job'));
+        return view('employer.applications.index', compact('applications'));
     }
-
 
     public function show(Request $request, Application $application)
     {

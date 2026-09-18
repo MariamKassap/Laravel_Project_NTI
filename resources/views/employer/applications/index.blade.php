@@ -7,10 +7,12 @@
     <div class="border-b-2 border-black pb-4">
         <h2 class="text-xl font-black text-black">
             <h2 class="text-xl font-black text-black">
-                Applicants for {{ $job->title }}
+                Applicants
             </h2>
         </h2>
-        <p class="text-xs font-bold text-black mt-1">Manage candidate application statuses directly below</p>
+        <p class="text-xs font-bold text-black mt-1">
+            Manage applications for your jobs and update candidate statuses
+        </p>
     </div>
 
     <div class="space-y-4">

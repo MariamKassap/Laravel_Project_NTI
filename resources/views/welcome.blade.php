@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Anti-عواطلي') }} — Bridge talent & opportunity</title>
+    <title>{{ config('app.name', 'Anti-عواطلي') }} —Anti-عواطلي</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @else
-        <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     @endif
 </head>
+
 <body class="font-sans antialiased bg-[#F4F0EA] text-black">
 
     <x-public-navbar />
@@ -38,17 +40,17 @@
                     </p>
                     <div class="mt-7 flex flex-wrap gap-3 justify-center lg:justify-start">
                         @auth
-                            @if(auth()->user()->role === 'employee')
-                                <a href="{{ route('employee.jobs.index') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Browse Jobs</a>
-                            @elseif(auth()->user()->role === 'employer')
-                                <a href="{{ route('employer.jobs.index') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Browse Jobs</a>
-                            @else
-                                <a href="{{ route('login') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Browse Jobs</a>
-                            @endif
-                            <a href="{{ auth()->user()->role==='employer' ? route('employer.jobs.create') : route('register') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-white text-black hover:bg-[#EFECE6] text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Post a Job</a>
+                        @if(auth()->user()->role === 'employee')
+                        <a href="{{ route('employee.jobs.index') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Browse Jobs</a>
+                        @elseif(auth()->user()->role === 'employer')
+                        <a href="{{ route('employer.jobs.index') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Browse Jobs</a>
                         @else
-                            <a href="{{ route('login') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Browse Jobs</a>
-                            <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-white text-black hover:bg-[#EFECE6] text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Post a Job</a>
+                        <a href="{{ route('login') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Browse Jobs</a>
+                        @endif
+                        <a href="{{ auth()->user()->role==='employer' ? route('employer.jobs.create') : route('register') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-white text-black hover:bg-[#EFECE6] text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Post a Job</a>
+                        @else
+                        <a href="{{ route('login') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Browse Jobs</a>
+                        <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-5 py-2.5 bg-white text-black hover:bg-[#EFECE6] text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Post a Job</a>
                         @endauth
                     </div>
 
@@ -119,55 +121,55 @@
 
                 <div class="mt-8 space-y-4">
                     @forelse($latestJobs as $job)
-                        @php $initial = strtoupper(substr($job->employer->company ?? $job->employer->name ?? 'J',0,1)); @endphp
-                        <div class="bg-white border-2 border-black rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4 shadow-[4px_4px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_#000000] transition-all">
-                            <div class="flex items-start gap-4 flex-1 min-w-0">
-                                <span class="w-11 h-11 rounded-lg bg-[#2563EB] text-white font-bold flex items-center justify-center shrink-0 border-2 border-black shadow-[2px_2px_0px_0px_#000000]">{{ $initial }}</span>
-                                <div class="min-w-0 flex-1">
-                                    <div class="flex flex-wrap items-center gap-2">
-                                        <h3 class="text-[15px] font-bold tracking-tight text-black truncate">{{ $job->title }}</h3>
-                                        <span class="hidden sm:inline w-1 h-1 bg-black rounded-full"></span>
-                                        <span class="text-sm font-bold text-black truncate">{{ $job->employer->company ?? $job->employer->name }} • {{ $job->location ?? 'Remote' }}</span>
-                                    </div>
-                                    <div class="mt-2 flex flex-wrap items-center gap-2">
-                                        @if($job->salary)
-                                            <span class="inline-flex text-xs font-bold bg-[#FEF08A] text-black px-2.5 py-1 rounded-md border-2 border-black shadow-[2px_2px_0px_0px_#000000]">${{ number_format($job->salary) }}</span>
-                                        @endif
-                                        <span class="text-xs font-bold bg-[#BFDBFE] text-black px-2.5 py-1 rounded-md border-2 border-black shadow-[2px_2px_0px_0px_#000000]">{{ ucfirst(str_replace('_',' ', $job->job_type ?? 'Full-time')) }}</span>
-                                        <span class="text-xs font-bold text-black">Posted {{ $job->created_at->diffForHumans() }}</span>
-                                    </div>
+                    @php $initial = strtoupper(substr($job->employer->company ?? $job->employer->name ?? 'J',0,1)); @endphp
+                    <div class="bg-white border-2 border-black rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4 shadow-[4px_4px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_#000000] transition-all">
+                        <div class="flex items-start gap-4 flex-1 min-w-0">
+                            <span class="w-11 h-11 rounded-lg bg-[#2563EB] text-white font-bold flex items-center justify-center shrink-0 border-2 border-black shadow-[2px_2px_0px_0px_#000000]">{{ $initial }}</span>
+                            <div class="min-w-0 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <h3 class="text-[15px] font-bold tracking-tight text-black truncate">{{ $job->title }}</h3>
+                                    <span class="hidden sm:inline w-1 h-1 bg-black rounded-full"></span>
+                                    <span class="text-sm font-bold text-black truncate">{{ $job->employer->company ?? $job->employer->name }} • {{ $job->location ?? 'Remote' }}</span>
+                                </div>
+                                <div class="mt-2 flex flex-wrap items-center gap-2">
+                                    @if($job->salary)
+                                    <span class="inline-flex text-xs font-bold bg-[#FEF08A] text-black px-2.5 py-1 rounded-md border-2 border-black shadow-[2px_2px_0px_0px_#000000]">${{ number_format($job->salary) }}</span>
+                                    @endif
+                                    <span class="text-xs font-bold bg-[#BFDBFE] text-black px-2.5 py-1 rounded-md border-2 border-black shadow-[2px_2px_0px_0px_#000000]">{{ ucfirst(str_replace('_',' ', $job->job_type ?? 'Full-time')) }}</span>
+                                    <span class="text-xs font-bold text-black">Posted {{ $job->created_at->diffForHumans() }}</span>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3 self-end sm:self-auto">
-                                @guest
-                                    <a href="{{ route('login') }}" title="Sign in to save" class="w-9 h-9 rounded-lg bg-white border-2 border-black shadow-[2px_2px_0px_0px_#000000] text-black hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center"><i class="fa-regular fa-bookmark text-sm"></i></a>
-                                    <a href="{{ route('login') }}" class="inline-flex items-center px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Sign in to Apply</a>
-                                @else
-                                    @if(auth()->user()->role === 'employee')
-                                        <a href="{{ route('employee.job.show', $job) }}" class="inline-flex items-center px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">View & Apply</a>
-                                    @else
-                                        <a href="{{ route('employer.jobs.show', $job) }}" class="inline-flex items-center px-5 py-2.5 bg-white text-black hover:bg-[#EFECE6] text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">View</a>
-                                    @endif
-                                @endauth
-                            </div>
                         </div>
+                        <div class="flex items-center gap-3 self-end sm:self-auto">
+                            @guest
+                            <a href="{{ route('login') }}" title="Sign in to save" class="w-9 h-9 rounded-lg bg-white border-2 border-black shadow-[2px_2px_0px_0px_#000000] text-black hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center"><i class="fa-regular fa-bookmark text-sm"></i></a>
+                            <a href="{{ route('login') }}" class="inline-flex items-center px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">Sign in to Apply</a>
+                            @else
+                            @if(auth()->user()->role === 'employee')
+                            <a href="{{ route('employee.job.show', $job) }}" class="inline-flex items-center px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">View & Apply</a>
+                            @else
+                            <a href="{{ route('employer.jobs.show', $job) }}" class="inline-flex items-center px-5 py-2.5 bg-white text-black hover:bg-[#EFECE6] text-sm font-bold rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">View</a>
+                            @endif
+                            @endauth
+                        </div>
+                    </div>
                     @empty
-                        <div class="bg-white border-2 border-black rounded-xl p-10 text-center shadow-[4px_4px_0px_0px_#000000]">
-                            <p class="text-sm font-bold tracking-tight text-black">No verified tech positions yet</p>
-                            <p class="text-sm font-bold text-black mt-1">New roles from real employers will appear here.</p>
-                        </div>
+                    <div class="bg-white border-2 border-black rounded-xl p-10 text-center shadow-[4px_4px_0px_0px_#000000]">
+                        <p class="text-sm font-bold tracking-tight text-black">No verified tech positions yet</p>
+                        <p class="text-sm font-bold text-black mt-1">New roles from real employers will appear here.</p>
+                    </div>
                     @endforelse
                 </div>
 
                 <div class="mt-8 text-center">
                     @auth
-                        @if(auth()->user()->role==='employee')
-                            <a href="{{ route('employee.jobs.index') }}" class="inline-flex items-center gap-2 text-sm font-bold text-black hover:text-black">View All {{ $totalJobsCount }} Verified Tech Positions <i class="fa-solid fa-arrow-right text-xs"></i></a>
-                        @else
-                            <a href="{{ route('employer.jobs.index') }}" class="inline-flex items-center gap-2 text-sm font-bold text-black hover:text-black">Manage {{ $totalJobsCount }} Positions <i class="fa-solid fa-arrow-right text-xs"></i></a>
-                        @endif
+                    @if(auth()->user()->role==='employee')
+                    <a href="{{ route('employee.jobs.index') }}" class="inline-flex items-center gap-2 text-sm font-bold text-black hover:text-black">View All {{ $totalJobsCount }} Verified Tech Positions <i class="fa-solid fa-arrow-right text-xs"></i></a>
                     @else
-                        <a href="{{ route('login') }}" class="inline-flex items-center gap-2 text-sm font-bold text-black hover:text-black">Sign in to view all {{ $totalJobsCount }} positions <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                    <a href="{{ route('employer.jobs.index') }}" class="inline-flex items-center gap-2 text-sm font-bold text-black hover:text-black">Manage {{ $totalJobsCount }} Positions <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                    @endif
+                    @else
+                    <a href="{{ route('login') }}" class="inline-flex items-center gap-2 text-sm font-bold text-black hover:text-black">Sign in to view all {{ $totalJobsCount }} positions <i class="fa-solid fa-arrow-right text-xs"></i></a>
                     @endauth
                 </div>
             </div>
@@ -262,4 +264,5 @@
     </footer>
 
 </body>
+
 </html>

@@ -1,13 +1,13 @@
 {{-- Unified top header — Neo-Brutalist — replaces sidebar --}}
 @php
-    $user = auth()->user();
-    $role = $user?->role;
-    $homeRoute = match($role) {
-        'employee' => route('employee.dashboard'),
-        'employer' => route('employer.dashboard'),
-        'admin'    => Route::has('admin.dashboard') ? route('admin.dashboard') : url('/'),
-        default    => url('/'),
-    };
+$user = auth()->user();
+$role = $user?->role;
+$homeRoute = match($role) {
+'employee' => route('employee.dashboard'),
+'employer' => route('employer.dashboard'),
+'admin' => Route::has('admin.dashboard') ? route('admin.dashboard') : url('/'),
+default => url('/'),
+};
 @endphp
 <nav class="bg-white border-b-2 border-black sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,17 +23,20 @@
                 <a href="{{ $homeRoute }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('employee.dashboard') || request()->routeIs('employer.dashboard') || request()->routeIs('admin.dashboard') ? 'underline' : '' }}">Home</a>
 
                 @if($role === 'employee')
-                    <a href="{{ route('employee.jobs.index') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('employee.jobs.*') ? 'underline' : '' }}">Jobs</a>
-                    <a href="{{ route('employee.applications.index') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('employee.applications.*') ? 'underline' : '' }}">Applications</a>
+                <a href="{{ route('employee.jobs.index') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('employee.jobs.*') ? 'underline' : '' }}">Jobs</a>
+                <a href="{{ route('employee.applications.index') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('employee.applications.*') ? 'underline' : '' }}">Applications</a>
                 @elseif($role === 'employer')
-                    <a href="{{ route('employer.jobs.index') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('employer.jobs.*') ? 'underline' : '' }}">Jobs</a>
-                    <a href="{{ route('employer.jobs.index') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('employer.applications.*') || request()->routeIs('employer.jobs.applications.*') ? 'underline' : '' }}">Applications</a>
-                    <a href="{{ route('employer.jobs.create') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('employer.jobs.create') ? 'underline' : '' }}">Post</a>
+                <a href="{{ route('employer.jobs.index') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('employer.jobs.*') ? 'underline' : '' }}">Jobs</a>
+                <a href="{{ route('employer.applications.index') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('employer.applications.*') || request()->routeIs('employer.jobs.applications.*') ? 'underline' : '' }}">Applications</a>
+                <!-- <a href="{{ route('employer.jobs.create') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('employer.jobs.create') ? 'underline' : '' }}">Post</a> -->
                 @else
-                    <a href="{{ route('employee.jobs.index') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2">Jobs</a>
-                    <a href="{{ route('employee.applications.index') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2">Applications</a>
+                <a href="{{ route('employee.jobs.index') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2">Jobs</a>
+                <a href="{{ route('employee.applications.index') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2">Applications</a>
                 @endif
-                <a href="{{ route('profile.edit') }}" class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('profile.edit') ? 'underline' : '' }}">Profile</a>
+                <a href="{{ route('posts.index') }}"
+                    class="px-3 py-2 text-sm font-bold text-black hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('posts.*') ? 'underline' : '' }}">
+                    Posts
+                </a>
             </div>
 
             {{-- Far Right: Search + Bell + Profile Dropdown --}}
@@ -45,17 +48,17 @@
                 </div>
 
                 {{-- Notifications — single bell --}}
-                <button class="w-9 h-9 bg-white border-2 border-black rounded-lg flex items-center justify-center text-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all" title="Notifications">
+                <!-- <button class="w-9 h-9 bg-white border-2 border-black rounded-lg flex items-center justify-center text-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all" title="Notifications">
                     <i class="fa-regular fa-bell text-sm"></i>
-                </button>
+                </button> -->
 
                 {{-- Profile Dropdown --}}
                 <div class="relative" x-data="{ open: false }" @click.outside="open = false">
                     <button @click="open = !open" class="flex items-center gap-2">
                         @if($user && $user->image)
-                            <img src="{{ asset('storage/' . $user->image) }}" alt="{{ $user->name }}" class="w-9 h-9 rounded-full object-cover border-2 border-black shadow-[2px_2px_0px_0px_#000000]">
+                        <img src="{{ asset('storage/' . $user->image) }}" alt="{{ $user->name }}" class="w-9 h-9 rounded-full object-cover border-2 border-black shadow-[2px_2px_0px_0px_#000000]">
                         @else
-                            <span class="w-9 h-9 bg-[#2563EB] text-white font-black rounded-full flex items-center justify-center text-sm border-2 border-black shadow-[2px_2px_0px_0px_#000000]">{{ strtoupper(substr($user->name ?? 'U',0,1)) }}</span>
+                        <span class="w-9 h-9 bg-[#2563EB] text-white font-black rounded-full flex items-center justify-center text-sm border-2 border-black shadow-[2px_2px_0px_0px_#000000]">{{ strtoupper(substr($user->name ?? 'U',0,1)) }}</span>
                         @endif
                         <i class="fa-solid fa-chevron-down text-[10px] text-black hidden sm:block"></i>
                     </button>
@@ -86,11 +89,11 @@
         <div class="px-4 py-3 space-y-1">
             <a href="{{ $homeRoute }}" class="block px-3 py-2 text-sm font-bold text-black hover:bg-white border-2 border-transparent hover:border-black rounded-lg">Home</a>
             @if($role === 'employee')
-                <a href="{{ route('employee.jobs.index') }}" class="block px-3 py-2 text-sm font-bold text-black hover:bg-white border-2 border-transparent hover:border-black rounded-lg">Jobs</a>
-                <a href="{{ route('employee.applications.index') }}" class="block px-3 py-2 text-sm font-bold text-black hover:bg-white border-2 border-transparent hover:border-black rounded-lg">Applications</a>
+            <a href="{{ route('employee.jobs.index') }}" class="block px-3 py-2 text-sm font-bold text-black hover:bg-white border-2 border-transparent hover:border-black rounded-lg">Jobs</a>
+            <a href="{{ route('employee.applications.index') }}" class="block px-3 py-2 text-sm font-bold text-black hover:bg-white border-2 border-transparent hover:border-black rounded-lg">Applications</a>
             @elseif($role === 'employer')
-                <a href="{{ route('employer.jobs.index') }}" class="block px-3 py-2 text-sm font-bold text-black hover:bg-white border-2 border-transparent hover:border-black rounded-lg">Jobs</a>
-                <a href="{{ route('employer.jobs.create') }}" class="block px-3 py-2 text-sm font-bold text-black hover:bg-white border-2 border-transparent hover:border-black rounded-lg">Post</a>
+            <a href="{{ route('employer.jobs.index') }}" class="block px-3 py-2 text-sm font-bold text-black hover:bg-white border-2 border-transparent hover:border-black rounded-lg">Jobs</a>
+            <a href="{{ route('employer.jobs.create') }}" class="block px-3 py-2 text-sm font-bold text-black hover:bg-white border-2 border-transparent hover:border-black rounded-lg">Post</a>
             @endif
             <a href="{{ route('profile.edit') }}" class="block px-3 py-2 text-sm font-bold text-black hover:bg-white border-2 border-transparent hover:border-black rounded-lg">Profile</a>
         </div>

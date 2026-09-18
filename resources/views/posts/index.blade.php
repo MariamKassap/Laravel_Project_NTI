@@ -23,14 +23,15 @@
                     <span class="posts-hero-badge inline-flex items-center px-2.5 py-1 rounded-md text-xs font-black tracking-widest border border-black bg-blue-200 text-black shadow-[1px_1px_0px_0px_#000000]">COMMUNITY FEED</span>
                     <h1 class="posts-title text-3xl font-black text-black tracking-tight mt-3">All Posts</h1>
                     <p class="posts-subtitle text-sm font-bold text-slate-600 mt-1 max-w-lg">
-                        Share your thoughts, ideas, and opportunities with the community.
+                        <!-- Share your thoughts, ideas, and opportunities with the community. -->
+                        خليك اجتماعي
                     </p>
                 </div>
 
                 @auth
                 <a
                     href="{{ url('/posts/create') }}"
-                    class="create-post-button inline-flex items-center gap-2 bg-[#2563EB] text-white font-bold border-2 border-black rounded-lg px-4 py-2 text-sm shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all whitespace-nowrap">
+                    class="create-post-button inline-flex items-center gap-2 bg-[#60A5FA] text-white font-bold border-2 border-black rounded-lg px-4 py-2 text-sm shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all whitespace-nowrap">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="12" y1="5" x2="12" y2="19"></line>
                         <line x1="5" y1="12" x2="19" y2="12"></line>

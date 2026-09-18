@@ -68,12 +68,6 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
     Route::get('/employee/jobs/{job}', [EmployeeJobController::class, 'show'])->name('employee.job.show');
 });
 
-
-// Admin Dashboard
-// Route::get('/admin', function () {
-//    return view('admin.dashboard');
-//})->name('admin.dashboard');
-
 // Community — public read, auth required to interact
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
@@ -143,6 +137,10 @@ Route::middleware(['auth', 'isEmployerOrAdmin'])->prefix('employer')->name('empl
     Route::get('/jobs/{job}/applications', [EmployerApplicationController::class, 'index'])->name('jobs.applications.index');
 
     Route::patch('/applications/{application}/status', [EmployerApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
+
+    // List all applications received by the employer
+    Route::get('/applications', [EmployerApplicationController::class, 'index'])
+        ->name('applications.index');
 
     //mariam added while testing 
     Route::get('/applications/{application}', [EmployerApplicationController::class, 'show'])
