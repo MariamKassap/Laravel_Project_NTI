@@ -51,8 +51,102 @@
                         {{-- Post Header --}}
                         <div class="post-header">
 
+<<<<<<< Updated upstream
                             <div class="post-avatar">
                                 {{ strtoupper(substr($post->user->name, 0, 1)) }}
+=======
+                        <div class="post-avatar w-10 h-10 shrink-0 rounded-full bg-blue-200 border-2 border-black shadow-[2px_2px_0px_0px_#000000] flex items-center justify-center font-black text-black text-sm">
+                            <img
+                            src="{{ asset('storage/' . $post->user->image)}}"
+                            class="w-10 h-10 rounded-full object-cover"
+                            >
+                        </div>
+
+                        <div class="post-header-info flex-1 min-w-0">
+                            <h2 class="post-title text-lg font-black text-black leading-tight">
+                                {{ $post->title }}
+                            </h2>
+
+                            <p class="post-author flex items-center gap-1.5 flex-wrap text-sm mt-1">
+                                <span class="post-author-name font-black text-black">{{ $post->user->name }}</span>
+                                @if($post->created_at)
+                                <span class="post-dot text-slate-400 font-bold">•</span>
+                                <span class="post-date font-bold text-slate-600">{{ $post->created_at->diffForHumans() }}</span>
+                                @endif
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    {{-- Post Content --}}
+                    <div class="post-content text-[15px] font-medium text-black leading-relaxed break-words">
+                        <p class="m-0 whitespace-pre-wrap">{{ $post->content }}</p>
+                    </div>
+
+
+                    {{-- Media Gallery --}}
+                    @if($post->media->count())
+
+                    @php
+                    $mediaItems = $post->media->values();
+                    $mediaCount = $mediaItems->count();
+                    $visibleCount = min($mediaCount, 4);
+                    $visibleMedia = $mediaItems->take($visibleCount);
+                    $remaining = $mediaCount - $visibleCount;
+                    @endphp
+
+                    <div
+                        class="post-gallery mt-4 grid gap-1 rounded-xl overflow-hidden border-2 border-black bg-slate-100"
+                        data-media-count="{{ $mediaCount }}"
+                        data-gallery-count="{{ $visibleCount }}">
+
+                        @foreach ($visibleMedia as $index => $media)
+
+                        @php
+                        $mediaUrl = asset('storage/' . $media->media_path);
+                        $isLastVisible = ($index === $visibleCount - 1);
+                        $showOverlay = $isLastVisible && $remaining > 0;
+                        @endphp
+
+                        <div
+                            class="gallery-item gallery-item-{{ $visibleCount }} gallery-pos-{{ $index }} relative overflow-hidden cursor-pointer bg-black"
+                            data-gallery-index="{{ $index }}"
+                            data-gallery-post="{{ $post->id }}"
+                            role="button"
+                            tabindex="0"
+                            aria-label="Open media {{ $index + 1 }} of {{ $mediaCount }}">
+
+                            @if ($media->media_type === 'image')
+
+                            <img
+                                src="{{ $mediaUrl }}"
+                                alt="Post Image"
+                                class="gallery-media w-full h-full object-cover block"
+                                loading="lazy"
+                                data-media-type="image"
+                                data-media-src="{{ $mediaUrl }}">
+
+                            @elseif ($media->media_type === 'video')
+
+                            <video
+                                class="gallery-media w-full h-full object-cover block"
+                                preload="metadata"
+                                muted
+                                playsinline
+                                data-media-type="video"
+                                data-media-src="{{ $mediaUrl }}">
+                                <source
+                                    src="{{ $mediaUrl }}"
+                                    type="video/mp4">
+                            </video>
+
+                            {{-- Video Play Icon --}}
+                            <div class="gallery-play-icon absolute inset-0 flex items-center justify-center text-white pointer-events-none" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="w-11 h-11 p-2.5 rounded-full bg-black/60 border-2 border-white/20 backdrop-blur">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+>>>>>>> Stashed changes
                             </div>
 
                             <div class="post-header-info">

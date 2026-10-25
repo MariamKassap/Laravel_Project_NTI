@@ -31,12 +31,33 @@
                     </div>
                 </div>
 
+<<<<<<< Updated upstream
                 <div class="flex items-center gap-3">
                     @guest
                         <a href="{{ route('login') }}" class="hidden sm:inline-flex text-sm font-medium text-slate-600 hover:text-slate-900 px-4 py-2">Sign In</a>
                         <a href="{{ route('register') }}" class="inline-flex items-center px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition">Register</a>
                     @else
                         {{-- Authenticated - role-aware dashboard link --}}
+=======
+    <x-public-navbar />
+
+    <main>
+        {{-- ================= HERO — focused on core value (no community widget) ================= --}}
+        <section class="bg-[#F4F0EA] relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20 relative">
+                <div class="max-w-3xl mx-auto text-center lg:text-left lg:mx-0">
+                    <span class="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.14em] text-black bg-white border-2 border-black rounded-full px-3.5 py-1.5 shadow-[2px_2px_0px_0px_#000000]">
+                        <span class="w-1.5 h-1.5 bg-[#2563EB] rounded-full border border-black"></span>
+                        DIRECT. NO MATCHING ALGORITHMS.
+                    </span>
+                    <h1 class="mt-6 text-[32px] sm:text-[40px] lg:text-[48px] font-bold leading-[1.05] tracking-tight text-black">
+                        Bridge the gap between<br>
+                        <span class="text-black">talent and opportunity.</span><br>
+                        <span class="text-black font-bold">No fluff, just real tech careers.</span>
+                    
+                    <div class="mt-7 flex flex-wrap gap-3 justify-center lg:justify-start">
+                        @auth
+>>>>>>> Stashed changes
                         @if(auth()->user()->role === 'employee')
                             <a href="{{ route('employee.dashboard') }}" class="hidden sm:inline-flex text-sm font-medium text-slate-600 hover:text-slate-900 px-3 py-2">Dashboard</a>
                         @elseif(auth()->user()->role === 'employer')
@@ -119,9 +140,19 @@
                                 <div class="text-sm font-semibold">Community is active</div>
                                 <div class="text-xs text-slate-400">{{ isset($posts) ? $posts->count() : 0 }} recent posts • Join discussion</div>
                             </div>
+<<<<<<< Updated upstream
                         </div>
                         <div class="pt-2 text-xs text-slate-400">
                             <i class="fa-solid fa-lock text-[10px]"></i> Apply, like, comment, and create posts require authentication. Browsing is public.
+=======
+                            <button type="submit" class="shrink-0 w-full sm:w-12 h-12 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </form>
+                        <div class="mt-3 flex flex-wrap gap-4 text-xs justify-center lg:justify-start">
+                            <span class="inline-flex items-center gap-1.5 font-bold text-black"><i class="fa-solid fa-circle-check"></i> Verified Salaries Only</span>
+                            
+>>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -207,6 +238,7 @@
                 </a>
             </div>
 
+<<<<<<< Updated upstream
             @if(isset($posts) && $posts->count())
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     @foreach($posts as $post)
@@ -268,6 +300,30 @@
                 @else
                     <a href="{{ route('profile.edit') }}" class="hover:text-slate-700">Profile</a>
                 @endguest
+=======
+    {{-- ================= FOOTER ================= --}}
+    <footer class="bg-white border-t-2 border-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="col-span-2 md:col-span-1">
+                    <a href="{{ url('/') }}" class="flex items-center gap-2.5">
+                        <span class="w-9 h-9 bg-[#2563EB] text-white font-extrabold rounded-lg flex items-center justify-center text-[15px] border-2 border-black shadow-[2px_2px_0px_0px_#000000]">A</span>
+                        <span class="text-[17px] font-bold tracking-tight text-black">Anti-عواطلي</span>
+                    </a>
+                    
+                    <div class="mt-4 flex gap-3">
+                        
+                        <a href="https://www.linkedin.com/in/salma-fathy-elshafei-8b7a8a24a/" class="w-8 h-8 rounded-lg bg-white border-2 border-black shadow-[2px_2px_0px_0px_#000000] text-black hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
+                        <a href="https://github.com/salma150" class="w-8 h-8 rounded-lg bg-white border-2 border-black shadow-[2px_2px_0px_0px_#000000] text-black hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center"><i class="fa-brands fa-github text-sm"></i></a>
+                        
+                    </div>
+                    </div>
+                </div>
+                
+            <div class="mt-10 pt-6 border-t-2 border-black flex flex-col sm:flex-row gap-3 justify-between items-center text-xs font-bold text-black">
+                <p>© {{ date('Y') }} Anti-عواطلي. All rights reserved. Built for the makers.</p>
+                <p class="inline-flex items-center gap-2"><span class="w-2 h-2 bg-[#2563EB] rounded-full border border-black"></span> All systems operational</p>
+>>>>>>> Stashed changes
             </div>
         </div>
     </footer>
